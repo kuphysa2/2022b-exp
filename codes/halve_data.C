@@ -6,7 +6,7 @@
 int main()
 {
     FILE *in_file = fopen("../exp0216/a0220/exp0216.dat", "r");
-    FILE *out_file = fopen("../exp0216/a0220/exp0216_halvened.dat", "w");
+    FILE *out_file = fopen("../exp0216/a0220/exp0216_halved.dat", "w");
     int data[MAX_ROWS][MAX_COLS] = {};
     int row, col, num_rows;
 
