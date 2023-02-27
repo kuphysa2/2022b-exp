@@ -15,7 +15,7 @@ void time_energy()
 {
     // データを読み込む
     Double_t data[MAX_ROWS][MAX_COLS];
-    std::ifstream file("../exp0227/a0227/exp0227_tcalib.dat");
+    std::ifstream file("../exp0227/a0227/exp0227_acalib.dat");
     int row = 0;
     while (file >> data[row][0] >> data[row][1] >> data[row][2])
     {
