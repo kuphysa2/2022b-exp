@@ -15,7 +15,7 @@ void draw_tdcadc()
     TH1S *hadc0 = new TH1S("h1", "h1", 1000, 0, 4500);
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, 0, 4500);
     TH1S *hadc2 = new TH1S("h1", "h1", 1000, 0, 4500);
-    ifstream data("../exp0216/a0220/exp0216_halved.dat");
+    ifstream data("../exp0216/a0227/exp0216_halved.dat");
     double tdc, adc[] = {0, 0, 0};
     while (!data.eof())
     {
@@ -39,6 +39,7 @@ void draw_tdcadc()
 
     TCanvas *canvases[4];
     canvases[0] = new TCanvas(TString::Format("canvas%d", 0), "", 500, 500);
+    gPad->SetLogy(1);
     htdc->Draw();
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();

@@ -1,19 +1,21 @@
 #include <iostream>
 #include <fstream>
 #include "TH2.h"
+#include "TH2F.h"
+#include "TROOT.h"
 #include "TCanvas.h"
 #include "TStyle.h"
 #include "TColor.h"
 #include "TMath.h"
 
-const int MAX_ROWS = 100000;
+const int MAX_ROWS = 1000000;
 const int MAX_COLS = 4;
 
-int main()
+int time_energy()
 {
     // データを読み込む
     Double_t data[MAX_ROWS][MAX_COLS];
-    std::ifstream file("../exp0216/a0220/exp0216_halved.dat");
+    std::ifstream file("../exp0216/a0227/exp0216_halved.dat");
     int row = 0;
     while (file >> data[row][0] >> data[row][1] >> data[row][2] >> data[row][3])
     {
@@ -27,10 +29,10 @@ int main()
     file.close();
 
     int nBins = 200;
-    double xMin = 600;
-    double xMax = 800;
+    double xMin = 0;
+    double xMax = 4500;
     double yMin = 0;
-    double yMax = 2400;
+    double yMax = 4500;
     double zMin = 1;
     double zMax = 1e6;
     gStyle->SetOptStat(0);
@@ -59,7 +61,7 @@ int main()
         hist->GetZaxis()->SetTitleFont(42);
         hist->SetOption("colz");
         hist->SetContour(100);
-        hist->SetLogz();
+        hist->SetOption("logz");
         TCanvas *canvas = new TCanvas(Form("canvas%d", k), Form("canvas%d", k), 800, 600);
         canvas->SetRightMargin(0.15);
         hist->Draw("colz");
