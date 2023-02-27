@@ -11,11 +11,11 @@ void draw_tdcadc()
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
 
-    TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 4000);
+    TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
     TH1S *hadc0 = new TH1S("h1", "h1", 1000, 0, 4500);
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, 0, 4500);
     TH1S *hadc2 = new TH1S("h1", "h1", 1000, 0, 4500);
-    ifstream data("../exp0216/a0227/exp0216_halved.dat");
+    ifstream data("../exp0216/a0227/exp0216_tcalib.dat");
     double tdc, adc[] = {0, 0, 0};
     while (!data.eof())
     {
@@ -35,6 +35,10 @@ void draw_tdcadc()
     hadc0->Fit(f0, "", "", 1850, 2200);
     TF1 *f1 = new TF1(Form("fit%d", 1), "gaus");
     hadc1->Fit(f1, "", "", 1650, 1900);
+    TF1 *ftdc = new TF1("ftdc", "[0] * exp((x - [1]) / [2]) + [3]");
+    ftdc->SetParameters(1, 600, 100, -20);
+    ftdc->SetParNames("N_0", "x_0", "#tau", "BG");
+    htdc->Fit("ftdc", "", "", 620, 720);
     // TF1 *f2 = new TF1(Form("fit%d", 2), "gaus", 1800, 2200);
 
     TCanvas *canvases[4];
