@@ -33,7 +33,6 @@ void TQcorrection()
         for (int j = 0; j < 2; j++)
         {
             histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 100, E[i] - 15, E[i] + 15);
-            histograms[i][j]->SetTitle(Form("ADC%d Distribution (E=%f)", j + 1, E[i]), "time [ns]", "count");
         }
     }
 
