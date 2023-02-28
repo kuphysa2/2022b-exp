@@ -18,7 +18,7 @@ void TQcorrection()
     int counter = 0;
     int row;
     int flag;
-    double dE = 10;
+    double dE = 20;
     double E[trial] = {}, dt[2][trial] = {};
     // initialize E
     for (int i = 0; i < trial; i++)
@@ -50,7 +50,7 @@ void TQcorrection()
             {
                 if (adc[row][j] > E[i] - 5 && adc[row][j] < E[i] + 5)
                 {
-                    histograms[i][j]->Fill(adc[row][j]);
+                    histograms[i][j]->Fill(tdc[i]);
                     flag++;
                 }
             }
