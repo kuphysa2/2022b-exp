@@ -9,8 +9,8 @@
 
 int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 {
-    std::ifstream ifs("../exp0227/a0227/exp0227_tcalib.dat");
-    std::ofstream ofs("../exp0227/a0227/exp0227_acalib.dat");
+    std::ifstream ifs("../exp0227/a0228/exp0227_tcalib.dat");
+    std::ofstream ofs("../exp0227/a0228/exp0227_acalib.dat");
 
     int adc[2];
     double tdc;
@@ -27,9 +27,9 @@ int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 
 int main(int argc, char *argv[])
 {
-    double factor1 = -0.0007;
+    double factor1 = 0.0007;
     double ground1 = -0.2451;
-    double factor2 = -0.0007;
+    double factor2 = 0.0007;
     double ground2 = -0.1629;
 
     if (argc > 1)

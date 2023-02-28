@@ -12,9 +12,9 @@ void draw_tdcadc()
     gStyle->SetOptFit(1111);
 
     TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
-    TH1S *hadc0 = new TH1S("h1", "h1", 1000, 0, 4500);
-    TH1S *hadc1 = new TH1S("h1", "h1", 1000, 0, 4500);
-    ifstream data("../exp0227/a0227/exp0227_acalib.dat");
+    TH1S *hadc0 = new TH1S("h1", "h1", 1000, -.5, 2.8);
+    TH1S *hadc1 = new TH1S("h1", "h1", 1000, -.5, 2.8);
+    ifstream data("../exp0227/a0228/exp0227_acalib.dat");
     double tdc, adc[] = {0, 0};
     while (!data.eof())
     {
@@ -43,13 +43,15 @@ void draw_tdcadc()
     gPad->SetLogy(1);
     htdc->Draw();
     canvases[0]->Update();
-    canvases[0]->Print("../exp0227/a0227/tdc.pdf");
+    canvases[0]->Print("../exp0227/a0228/tdc.pdf");
+
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
     canvases[1]->Update();
-    canvases[1]->Print("../exp0227/a0227/adc1.pdf");
+    canvases[1]->Print("../exp0227/a0228/adc1.pdf");
+
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
     canvases[2]->Update();
-    canvases[2]->Print("../exp0227/a0227/adc2.pdf");
+    canvases[2]->Print("../exp0227/a0228/adc2.pdf");
 }

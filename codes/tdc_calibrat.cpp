@@ -9,8 +9,8 @@
 
 int tdc_calibrat(double factor = 0.2126, double ground = -6.4172)
 {
-    std::ifstream ifs("../exp0227/a0227/exp0227_halved.dat");
-    std::ofstream ofs("../exp0227/a0227/exp0227_tcalib.dat");
+    std::ifstream ifs("../exp0227/a0228/exp0227_halved.dat");
+    std::ofstream ofs("../exp0227/a0228/exp0227_tcalib.dat");
 
     int tdc, adc[2];
     int row = 0;
