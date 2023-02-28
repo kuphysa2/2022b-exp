@@ -9,7 +9,7 @@
 #include "TMath.h"
 
 const int MAX_ROWS = 1000000;
-const int MAX_COLS = 4;
+const int MAX_COLS = 3;
 
 void time_energy()
 {
@@ -41,7 +41,7 @@ void time_energy()
     TCanvas *canvases[4];
 
     TH2F *h1 = new TH2F("h1", "h1", nBins, xMin, xMax, nBins, yMin, yMax);
-    for (int i=0; i < row; i += 2)
+    for (int i=0; i < row; i++)
     {
         binX = h1->GetXaxis()->FindBin(data[i][0]);
         binY = h1->GetXaxis()->FindBin(data[i][2]);
