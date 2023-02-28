@@ -18,7 +18,7 @@ void TQcorrection()
     int counter = 0;
     int row;
     int flag;
-    double dE = 20;
+    double dE = 10;
     double E[trial] = {}, dt[2][trial] = {};
     // initialize E
     for (int i = 0; i < trial; i++)
@@ -36,6 +36,7 @@ void TQcorrection()
 
     // input data
     row = 0;
+    counter = 0;
     std::ifstream ifs("../exp0227/a0228/exp0227_acalib.dat");
     while (!ifs.eof())
     {
@@ -65,19 +66,24 @@ void TQcorrection()
     }
     ifs.close();
 
+    TCanvas *c1 = new TCanvas("canvas", "test", 800, 600);
+    histograms[0][1]->Draw();
+
     std::cout << row << std::endl;
 
     // output
-    TCanvas *canvases[2];
-    canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
-    canvases[1] = new TCanvas("canvas", "ADC2 Distributions", 800, 600);
-    canvases[0]->Divide(4, 4);
-    canvases[1]->Divide(4, 4);
-    for (int i = 0; i < trial; i++)
-    {
-        canvases[0]->cd(i + 1);
-        histograms[i][0]->Draw();
-        canvases[1]->cd(i + 1);
-        histograms[i][1]->Draw();
-    }
+    // TCanvas *canvases[2];
+    // canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
+    // canvases[1] = new TCanvas("canvas", "ADC2 Distributions", 800, 600);
+    // canvases[0]->Divide(4, 4);
+    // canvases[1]->Divide(4, 4);
+    // for (int i = 0; i < trial; i++)
+    // {
+    //     canvases[0]->cd(i + 1);
+    //     histograms[i][0]->Draw();
+    //     canvases[1]->cd(i + 1);
+    //     histograms[i][1]->Draw();
+    // }
+
+    return;
 }

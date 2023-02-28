@@ -51,6 +51,7 @@ void time_energy()
     h1->SetMaximum(zMax);
     h1->SetOption("colz");
     h1->SetOption("logz");
+    h1->SetTitle("Time-Energy ADC1; energy [keV]; time [ns];");
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");
     canvases[0]->Update();
@@ -67,6 +68,7 @@ void time_energy()
     // h2->SetMinimum(zMin);
     // h2->SetOption("colz");
     // h2->SetOption("logz");
+    // h2->SetTitle("Time-Energy ADC2; energy [keV]; time [ns];");
     // canvases[1] = new TCanvas("c2", "c2", 600, 600);
     // canvases[1]->Update();
     // canvases[1]->Print("../exp0227/a0228/time_energy2.pdf");
