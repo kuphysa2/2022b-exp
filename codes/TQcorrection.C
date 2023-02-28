@@ -30,8 +30,11 @@ void TQcorrection()
     TH1F *histograms[trial][2];
     for (int i = 0; i < trial; i++)
     {
-        histograms[i][0] = new TH1F(Form("histogram%d", i), Form("ADC1 Distribution (E=%f)", E[i]), 100, E[i] - 15, E[i] + 15);
-        histograms[i][1] = new TH1F(Form("histogram%d", i), Form("ADC2 Distribution (E=%f)", E[i]), 100, E[i] - 15, E[i] + 15);
+        for (int j = 0; j < 2; j++)
+        {
+            histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 100, E[i] - 15, E[i] + 15);
+            histograms[i][j]->SetTitle(Form("ADC%d Distribution (E=%f)", j + 1, E[i]), "time [ns]", "count");
+        }
     }
 
     // input data
