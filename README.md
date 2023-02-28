@@ -71,10 +71,11 @@
   * calibration式 $energy=factor*ADC+ground$ から引数(factor, ground)を取得
     * デフォルト引数として[齊藤の02/27計算結果](#tdc-table)を使用
       * 下記の表の通り
+    * 第１変数から順に ADC1 factpr, ADC1 ground, ADC2 factor, ADC2 ground
   * コンパイルは以下の手順
     1. `g++ adc_calibrat.cpp -o adc_calibrat`
     2. `./adc_calibrat`
-    3. もし引数を変更したければ `./adc_calibrat 0.3 0.5`
+    3. もし引数を変更したければ `./adc_calibrat 0.3 0.5 0.2 0.1`
   * `exp0000_tcalib.dat`のADCデータをcalibrate
   * calibrated dataを`exp0000_acalib.dat`に出力
 * 注意
@@ -87,9 +88,9 @@
 齊藤のADC calibration data
 
 | NaI No. | factor | ground  |
-|:------|:-------|:--------|
-| 1 | 0.0007 | -0.2451 |
-| 2 | 0.0007 | -0.1629 |
+|------:|:-------|:--------|
+| 1 | 0.7355 | -245.15 |
+| 2 | 0.6937 | -162.87 |
 
 ## draw_tdcadc.C
 

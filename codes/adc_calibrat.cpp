@@ -27,10 +27,10 @@ int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 
 int main(int argc, char *argv[])
 {
-    double factor1 = 0.0007;
-    double ground1 = -0.2451;
-    double factor2 = 0.0007;
-    double ground2 = -0.1629;
+    double factor1 = 0.7355;
+    double ground1 = -245.15;
+    double factor2 = 0.6937;
+    double ground2 = -162.87;
 
     if (argc > 1)
         factor1 = atof(argv[1]);

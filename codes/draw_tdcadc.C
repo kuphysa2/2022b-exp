@@ -12,8 +12,8 @@ void draw_tdcadc()
     gStyle->SetOptFit(1111);
 
     TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
-    TH1S *hadc0 = new TH1S("h1", "h1", 1000, -.5, 2.8);
-    TH1S *hadc1 = new TH1S("h1", "h1", 1000, -.5, 2.8);
+    TH1S *hadc0 = new TH1S("h1", "h1", 1000, -500, 2800);
+    TH1S *hadc1 = new TH1S("h1", "h1", 1000, -500, 2800);
     ifstream data("../exp0227/a0228/exp0227_acalib.dat");
     double tdc, adc[] = {0, 0};
     while (!data.eof())
@@ -23,16 +23,16 @@ void draw_tdcadc()
         hadc0->Fill(adc[0]);
         hadc1->Fill(adc[1]);
     }
-    htdc->SetTitle("TDC; value; count;");
-    hadc0->SetTitle("ADC1; value; count;");
-    hadc1->SetTitle("ADC2; value; count;");
+    htdc->SetTitle("TDC; time [ns]; count;");
+    hadc0->SetTitle("ADC1; energy [keV]; count;");
+    hadc1->SetTitle("ADC2; energy [keV]; count;");
 
     // ADC calibration
     TF1 *f0 = new TF1(Form("fit%d", 0), "gaus");
     hadc0->Fit(f0, "", "", 1850, 2200);
     TF1 *f1 = new TF1(Form("fit%d", 1), "gaus");
     hadc1->Fit(f1, "", "", 1650, 1900);
-    TF1 *ftdc = new TF1("ftdc", "[0] * exp((x - [1]) / [2]) + [3]");
+    TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
     ftdc->SetParameters(1, 600, 100, -20);
     ftdc->SetParNames("N_0", "x_0", "#tau", "BG");
     htdc->Fit("ftdc", "", "", 620, 720);
