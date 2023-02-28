@@ -42,8 +42,14 @@ void draw_tdcadc()
     canvases[0] = new TCanvas(TString::Format("canvas%d", 0), "", 500, 500);
     gPad->SetLogy(1);
     htdc->Draw();
+    canvases[0]->Update();
+    canvases[0]->Print("../exp0227/a0227/tdc.pdf");
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
+    canvases[1]->Update();
+    canvases[1]->Print("../exp0227/a0227/adc1.pdf");
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
+    canvases[2]->Update();
+    canvases[2]->Print("../exp0227/a0227/adc2.pdf");
 }
