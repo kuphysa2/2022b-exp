@@ -13,12 +13,13 @@ int tdc_calibrat(double factor = 0.2126, double ground = -6.4172)
     std::ofstream ofs("../exp0227/a0228/exp0227_tcalib.dat");
 
     int tdc, adc[2];
+    double origin = 850;
     int row = 0;
 
     while (!ifs.eof())
     {
         ifs >> adc[0] >> adc[1] >> tdc;
-        ofs << adc[0] << " " << adc[1] << " " << (double)tdc * factor + ground << std::endl;
+        ofs << adc[0] << " " << adc[1] << " " << 850 - (double)tdc * factor - ground << std::endl;
     }
 
     return 0;
