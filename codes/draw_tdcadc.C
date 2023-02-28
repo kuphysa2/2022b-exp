@@ -23,19 +23,21 @@ void draw_tdcadc()
         hadc0->Fill(adc[0]);
         hadc1->Fill(adc[1]);
     }
+
+    // titles
     htdc->SetTitle("TDC; time [ns]; count;");
     hadc0->SetTitle("ADC1; energy [keV]; count;");
     hadc1->SetTitle("ADC2; energy [keV]; count;");
 
-    // ADC calibration
+    // Fitting
     TF1 *f0 = new TF1(Form("fit%d", 0), "gaus");
-    hadc0->Fit(f0, "", "", 1850, 2200);
+    hadc0->Fit(f0, "", "", 200, 300);
     TF1 *f1 = new TF1(Form("fit%d", 1), "gaus");
     hadc1->Fit(f1, "", "", 1650, 1900);
     TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
     ftdc->SetParameters(1, 600, 100, -20);
     ftdc->SetParNames("N_0", "x_0", "#tau", "BG");
-    htdc->Fit("ftdc", "", "", 620, 720);
+    htdc->Fit("ftdc", "", "", 280, 360);
     // TF1 *f2 = new TF1(Form("fit%d", 2), "gaus", 1800, 2200);
 
     TCanvas *canvases[4];

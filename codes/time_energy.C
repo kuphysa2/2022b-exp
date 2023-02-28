@@ -29,8 +29,8 @@ void time_energy()
     file.close();
 
     int nBins = 200;
-    double xMin = -.5;
-    double xMax = 2;
+    double xMin = -500;
+    double xMax = 2000;
     double yMin = 0;
     double yMax = 1000;
     double zMin = 1;
