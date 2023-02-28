@@ -53,6 +53,8 @@ void time_energy()
     h1->SetOption("logz");
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");
+    canvases[0]->Update();
+    canvases[0]->Print("../exp0227/a0227/time_energy1.pdf");
 
     // TH2F *h2 = new TH2F("h2", "h2", nBins, xMin, xMax, nBins, yMin, yMax);
     // for (int i=0; i < row; i += 2)
@@ -66,6 +68,8 @@ void time_energy()
     // h2->SetOption("colz");
     // h2->SetOption("logz");
     // canvases[1] = new TCanvas("c2", "c2", 600, 600);
+    // canvases[1]->Update();
+    // canvases[1]->Print("../exp0227/a0227/time_energy2.pdf");
     // h2->Draw("colz");
 
     return;
