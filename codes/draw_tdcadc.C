@@ -16,6 +16,8 @@ void draw_tdcadc()
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, -500, 2800);
     ifstream data("../exp0227/a0228/exp0227_acalib.dat");
     double tdc, adc[] = {0, 0};
+
+    // input
     while (!data.eof())
     {
         data >> adc[0] >> adc[1] >> tdc;
@@ -24,7 +26,7 @@ void draw_tdcadc()
         hadc1->Fill(adc[1]);
     }
 
-    // titles
+    // graph titles
     htdc->SetTitle("TDC; time [ns]; count;");
     hadc0->SetTitle("ADC1; energy [keV]; count;");
     hadc1->SetTitle("ADC2; energy [keV]; count;");
@@ -40,6 +42,7 @@ void draw_tdcadc()
     htdc->Fit("ftdc", "", "", 280, 360);
     // TF1 *f2 = new TF1(Form("fit%d", 2), "gaus", 1800, 2200);
 
+    // drawing TDC histogram
     TCanvas *canvases[4];
     canvases[0] = new TCanvas(TString::Format("canvas%d", 0), "", 500, 500);
     gPad->SetLogy(1);
@@ -47,11 +50,13 @@ void draw_tdcadc()
     canvases[0]->Update();
     canvases[0]->Print("../exp0227/a0228/tdc.pdf");
 
+    // drawing ADC1 histogram
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
     canvases[1]->Update();
     canvases[1]->Print("../exp0227/a0228/adc1.pdf");
 
+    // drawing ADC2 histogram
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
     canvases[2]->Update();

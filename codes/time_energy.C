@@ -13,10 +13,11 @@ const int MAX_COLS = 3;
 
 void time_energy()
 {
-    // データを読み込む
     Double_t data[MAX_ROWS][MAX_COLS];
     std::ifstream file("../exp0227/a0228/exp0227_acalib.dat");
     int row = 0;
+
+    // input
     while (file >> data[row][0] >> data[row][1] >> data[row][2])
     {
         row++;
@@ -40,6 +41,7 @@ void time_energy()
 
     TCanvas *canvases[4];
 
+    // making 2D histogram of ADC1-TDC
     TH2F *h1 = new TH2F("h1", "h1", nBins, xMin, xMax, nBins, yMin, yMax);
     for (int i=0; i < row; i++)
     {
@@ -57,6 +59,7 @@ void time_energy()
     canvases[0]->Update();
     canvases[0]->Print("../exp0227/a0228/time_energy1.pdf");
 
+    // making 2D histogram of ADC2-TDC
     // TH2F *h2 = new TH2F("h2", "h2", nBins, xMin, xMax, nBins, yMin, yMax);
     // for (int i=0; i < row; i += 2)
     // {

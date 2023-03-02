@@ -21,7 +21,7 @@ int main()
     }
 
     // output
-    int flag;
+    int flag;   // for judging the row is same with the previous or not
     int prev_flagged_row = 0;
     for (row = 0; row < num_rows - 1; row++)
     {
@@ -33,7 +33,7 @@ int main()
                 flag = 1;
             }
         }
-        if (flag == 1)
+        if (flag == 1)  // when the row is not the previous one
         {
             if (row == prev_flagged_row + 1)
                 printf("not doubled # %d\n", row);
