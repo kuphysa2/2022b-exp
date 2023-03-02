@@ -30,23 +30,17 @@ void TQcorrection()
         E[i] = E0 + i * dE;
     }
 
-    // TEST: making histograms (before inputting data)
-    TH1F *histograms[MAX_SEC];
+    // making histograms (before inputting data)
+    TH1F *histograms[MAX_SEC][2];
     for (i = 0; i < MAX_SEC; i++)
     {
-        histograms[i] = new TH1F(Form("histogram%d", i), Form("ADC1 Distrib. (E=%f)", E[i]), 100, E[i] - E_width, E[i] + E_width);
+        for (j = 0; j < 2; j++)
+        {
+            histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 200, 0, 1000);
+        }
     }
-    // // making histograms (before inputting data)
-    // TH1F *histograms[MAX_SEC][2];
-    // for (i = 0; i < MAX_SEC; i++)
-    // {
-    //     for (j = 0; j < 2; j++)
-    //     {
-    //         histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 100, E[i] - E_width, E[i] + E_width);
-    //     }
-    // }
 
-    // TEST: input data
+    // input data
     row = 0;
     std::ifstream ifs("../exp0227/a0228/exp0227_acalib.dat");
     while (!ifs.eof())
@@ -54,73 +48,56 @@ void TQcorrection()
         ifs >> adc[0] >> adc[1] >> tdc;
         row++;
         flag = 0;
-
         for (i = 0; i < MAX_SEC; i++)
         {
             for (j = 0; j < 2; j++)
             {
                 if (adc[j] > E[i] - E_width && adc[j] < E[i] + E_width)
                 {
-                    histograms[i]->Fill(tdc);
-                    // flag++;
+                    histograms[i][j]->Fill(tdc);
+                    flag++;
                 }
             }
-            // if (flag == 2) // when both histograms are filled
-            //     break;
+            if (flag == 2) // when both histograms are filled
+                break;
+        }
+        // error
+        if (row >= MAX_ROW)
+        {
+            std::cerr << "Error: too many rows in data file." << std::endl;
+            return 1;
         }
     }
     ifs.close();
 
-    // // input data
-    // row = 0;
-    // std::ifstream ifs("../exp0227/a0228/exp0227_acalib.dat");
-    // while (!ifs.eof())
-    // {
-    //     ifs >> adc[0] >> adc[1] >> tdc;
-    //     row++;
-    //     flag = 0;
+    // Fittings
+    TF1 *f[MAX_SEC][2];
+    for (i = 0; i < MAX_SEC; i++)
+    {
+        // fitting
+        f[i][0] = new TF1(Form("fit1%d", i), "gaus");
+        histograms[i][0]->Fit(f[i][0], "", "", 0, 500);
+    }
 
-    //     for (i = 0; i < MAX_SEC; i++)
-    //     {
-    //         for (j = 0; j < 2; j++)
-    //         {
-    //             if (adc[j] > E[i] - E_width && adc[j] < E[i] + E_width)
-    //             {
-    //                 histograms[i][j]->Fill(tdc);
-    //                 flag++;
-    //             }
-    //         }
-    //         if (flag == 2) // when both histograms are filled
-    //             break;
-    //     }
 
-    //     if (row >= MAX_ROW)
-    //     {
-    //         std::cerr << "Error: too many rows in data file." << std::endl;
-    //         return 1;
-    //     }
-    // }
-    // ifs.close();
-
-    // TEST: output
-    TCanvas *c1 = new TCanvas("canvas", "test", 800, 600);
-    histograms[6]->Draw();
-
-    // // output
-    // TCanvas *canvases[2];
-    // canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
+    // output
+    TCanvas *canvases[2];
+    canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
     // canvases[1] = new TCanvas("canvas", "ADC2 Distributions", 800, 600);
-    // canvases[0]->Divide(4, 4);
+    canvases[0]->Divide(4, 4);
     // canvases[1]->Divide(4, 4);
-    // for (int i = 0; i < MAX_SEC; i++)
-    // {
-    //     // drawing ADC1 E[i] histogram
-    //     canvases[0]->cd(i + 1);
-    //     histograms[i][0]->Draw();
-    //     // drawing ADC2 E[i] histogram
-    //     canvases[1]->cd(i + 1);
-    //     histograms[i][1]->Draw();
-    // }
+    for (int i = 0; i < MAX_SEC; i++)
+    {
+        // drawing ADC1 E[i] histogram
+        canvases[0]->cd(i + 1);
+        histograms[i][0]->Draw();
+
+        // drawing ADC2 E[i] histogram
+        // canvases[1]->cd(i + 1);
+        // histograms[i][1]->Draw();
+    }
+    canvases[0]->Update();
+    canvases[0]->Print("../exp0227/a0228/TQ_Tdistrib.pdf");
 
     return;
 }
