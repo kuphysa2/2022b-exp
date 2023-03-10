@@ -9,13 +9,22 @@
 #include "TMath.h"
 
 #define MAX_SEC 16 // ranges of E; E = E_0, E_1, ..., E_(MAX_SEC)
-#define MAX_ROW 500000
+#define MAX_ROW 600000
 
-void TQcorrection()
+int TQcorrection(int adc_channel = 1)
 {
-    Double_t tdc, adc[2];
+    // in case adc_channel is not valid
+    if (adc_channel != 1 && adc_channel != 2)
+    {
+        std::cout << "Channel is not valid" << std::endl;
+        return 0;
+    }
+    // adc_channel to 0 or 1
+    adc_channel--;
+
     int row;
     int flag;
+    Double_t tdc, adc[2];
     Double_t E[MAX_SEC] = {};   // center of energy ranges
     Double_t dt[2][MAX_SEC] = {};
     double E0 = 150;     // start point of E
@@ -31,13 +40,10 @@ void TQcorrection()
     }
 
     // making histograms (before inputting data)
-    TH1F *histograms[MAX_SEC][2];
+    TH1F *histograms[MAX_SEC];
     for (i = 0; i < MAX_SEC; i++)
     {
-        for (j = 0; j < 2; j++)
-        {
-            histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 75, 50, 200);
-        }
+        histograms[i] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", adc_channel + 1, E[i]), 75, 50, 200);
     }
 
     // input data
@@ -50,16 +56,10 @@ void TQcorrection()
         flag = 0;
         for (i = 0; i < MAX_SEC; i++)
         {
-            for (j = 0; j < 2; j++)
+            if (adc[adc_channel] > E[i] - E_width && adc[adc_channel] < E[i] + E_width)
             {
-                if (adc[j] > E[i] - E_width && adc[j] < E[i] + E_width)
-                {
-                    histograms[i][j]->Fill(tdc);
-                    flag++;
-                }
+                histograms[i]->Fill(tdc);
             }
-            if (flag == 2) // when both histograms are filled
-                break;
         }
         // error
         if (row >= MAX_ROW)
@@ -71,37 +71,43 @@ void TQcorrection()
     ifs.close();
 
     // Fittings
-    TF1 *f[MAX_SEC][2];
+    TF1 *f[MAX_SEC];
     for (i = 0; i < MAX_SEC; i++)
     {
         // fitting
-        f[i][0] = new TF1(Form("fit1%d", i), "gaus");
-        histograms[i][0]->Fit(f[i][0], "", "", 0, 500);
-        f[i][1] = new TF1(Form("fit1%d", i), "gaus");
-        histograms[i][1]->Fit(f[i][1], "", "", 0, 500);
+        f[i] = new TF1(Form("fit%d%d", adc_channel, i), "gaus");
+        histograms[i]->Fit(f[i], "", "", 0, 500);
     }
 
 
     // output
     TCanvas *canvases[2];
-    // canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
-    // canvases[0]->Divide(4, 4);
-    canvases[1] = new TCanvas("canvas", "ADC2 Distributions", 800, 600);
-    canvases[1]->Divide(4, 4);
+    TCanvas *canvas = new TCanvas("canvas", Form("ADC%d Distributions", adc_channel + 1), 1000, 800);
+    canvas->Divide(4, 4);
     for (int i = 0; i < MAX_SEC; i++)
     {
-        // drawing ADC1 E[i] histogram
-        // canvases[0]->cd(i + 1);
-        // histograms[i][0]->Draw();
-
-        // drawing ADC2 E[i] histogram
-        canvases[1]->cd(i + 1);
-        histograms[i][1]->Draw();
+        // drawing ADC E[i] histogram
+        canvas->cd(i + 1);
+        histograms[i]->Draw();
     }
-    // canvases[0]->Update();
-    // canvases[0]->Print("../exp0227/a0310/TQ_Tdistrib1.pdf");
-    canvases[1]->Update();
-    canvases[1]->Print("../exp0227/a0310/TQ_Tdistrib2.pdf");
+    canvas->Update();
+    canvas->Print(Form("../exp0227/a0310/TQ_Tdistrib%d.pdf", adc_channel + 1));
 
-    return;
+    return 0;
+}
+
+int main(int argc, char *argv[])
+{
+    // default value
+    int adc_channel = 1;    // 1 or 2
+
+    // changing value in case of input
+    if (argc > 1)
+    {
+        adc_channel = atof(argv[1]);
+    }
+
+    TQcorrection(adc_channel);
+
+    return 0;
 }
