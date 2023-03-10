@@ -9,8 +9,13 @@
 
 int tdc_calibrat(double factor = 0.246, double ground = -22.618)
 {
-    std::ifstream ifs("../exp0227/a0310/exp0227_halved.dat");
-    std::ofstream ofs("../exp0227/a0310/exp0227_tcalib.dat");
+    int exp_date = 227;
+    int ana_date = 310;
+    char ifs_name[64], ofs_name[64];
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
+    std::ifstream ifs(ifs_name);
+    std::ofstream ofs(ofs_name);
 
     int tdc, adc[2];
     double origin = 850;    // delay on TDC is 850 ns

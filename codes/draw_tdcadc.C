@@ -8,13 +8,19 @@
 
 void draw_tdcadc()
 {
+    int exp_date = 227;
+    int ana_date = 310;
+
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
 
     TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
     TH1S *hadc0 = new TH1S("h1", "h1", 1000, -500, 2800);
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, -500, 2800);
-    ifstream data("../exp0227/a0310/exp0227_acalib.dat");
+
+    char ifs_name[64];
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
+    ifstream data(ifs_name);
     double tdc, adc[] = {0, 0};
 
     // input
@@ -48,17 +54,23 @@ void draw_tdcadc()
     gPad->SetLogy(1);
     htdc->Draw();
     canvases[0]->Update();
-    canvases[0]->Print("../exp0227/a0310/tdc.pdf");
+    char tdc_ofs_name[64];
+    snprintf(tdc_ofs_name, 64, "../exp%04d/a%04d/tdc.pdf", exp_date, ana_date);
+    canvases[0]->Print(tdc_ofs_name);
 
     // drawing ADC1 histogram
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
     canvases[1]->Update();
-    canvases[1]->Print("../exp0227/a0310/adc1.pdf");
+    char adc1_ofs_name[64];
+    snprintf(adc1_ofs_name, 64, "../exp%04d/a%04d/adc1.pdf", exp_date, ana_date);
+    canvases[1]->Print(adc1_ofs_name);
 
     // drawing ADC2 histogram
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
     canvases[2]->Update();
-    canvases[2]->Print("../exp0227/a0310/adc2.pdf");
+    char adc2_ofs_name[64];
+    snprintf(adc2_ofs_name, 64, "../exp%04d/a%04d/adc2.pdf", exp_date, ana_date);
+    canvases[2]->Print(adc2_ofs_name);
 }
