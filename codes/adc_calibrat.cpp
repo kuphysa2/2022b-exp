@@ -6,8 +6,13 @@
 
 int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 {
-    std::ifstream ifs("../exp0227/a0310/exp0227_tcalib.dat");
-    std::ofstream ofs("../exp0227/a0310/exp0227_acalib.dat");
+    int exp_date = 227;
+    int ana_date = 310;
+    char ifs_name[64], ofs_name[64];
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
+    std::ifstream ifs(ifs_name);
+    std::ofstream ofs(ofs_name);
 
     int adc[2];
     double tdc;

@@ -1,11 +1,17 @@
 #include<fstream>
 #include<iostream>
 #include<string>
+#include<cstdlib>
 
 int main()
 {
-    std::ifstream ifs("../exp0227/a0310/exp0227.dat");
-    std::ofstream ofs("../exp0227/a0310/exp0227_halved.dat");
+    int exp_date = 227;
+    int ana_date = 310;
+    char ifs_name[64], ofs_name[64];
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
+    std::ifstream ifs(ifs_name);
+    std::ofstream ofs(ofs_name);
 
     int row, col, num_rows;
     int tdc, adc1, adc2;

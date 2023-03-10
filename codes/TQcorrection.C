@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdio>
 #include "TH2.h"
 #include "TH2F.h"
 #include "TROOT.h"
@@ -22,11 +23,13 @@ int TQcorrection(int adc_channel = 1)
     // adc_channel to 0 or 1
     adc_channel--;
 
+    int exp_date = 227;
+    int ana_date = 310;
     int row;
     int flag;
     Double_t tdc, adc[2];
     Double_t E[MAX_SEC] = {};   // center of energy ranges
-    Double_t dt[2][MAX_SEC] = {};
+    Double_t dt[MAX_SEC] = {};
     double E0 = 150;     // start point of E
     double dE = 20;      // E is set as E0, E0+dE, E0+2dE, ...
     double E_width = 5; // drawing histograms in range of E-E_width < energy < E+E_width
@@ -48,7 +51,10 @@ int TQcorrection(int adc_channel = 1)
 
     // input data
     row = 0;
-    std::ifstream ifs("../exp0227/a0310/exp0227_acalib.dat");
+    char ifs_name[64];
+    sprintf(ifs_name, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
+    std::cout << ifs_name << std::endl;
+    std::ifstream ifs(ifs_name);
     while (!ifs.eof())
     {
         ifs >> adc[0] >> adc[1] >> tdc;
@@ -70,15 +76,19 @@ int TQcorrection(int adc_channel = 1)
     }
     ifs.close();
 
-    // Fittings
+    // Fittings and recording dt
+    char ofs_name[64];
+    sprintf(ofs_name, "../exp%04d/a%04d/dt%d.dat", exp_date, ana_date, adc_channel + 1);
+    std::ofstream ofs_dt(ofs_name);
     TF1 *f[MAX_SEC];
     for (i = 0; i < MAX_SEC; i++)
     {
         // fitting
         f[i] = new TF1(Form("fit%d%d", adc_channel, i), "gaus");
         histograms[i]->Fit(f[i], "", "", 0, 500);
+        dt[i] = f[i]->GetParameter(1);
+        ofs_dt << E[i] << " " << dt[i] << std::endl;
     }
-
 
     // output
     TCanvas *canvases[2];
@@ -91,7 +101,7 @@ int TQcorrection(int adc_channel = 1)
         histograms[i]->Draw();
     }
     canvas->Update();
-    canvas->Print(Form("../exp0227/a0310/TQ_Tdistrib%d.pdf", adc_channel + 1));
+    canvas->Print(Form("../exp%04d/a%04d/TQ_Tdistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
 
     return 0;
 }
