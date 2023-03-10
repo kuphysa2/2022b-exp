@@ -1,3 +1,4 @@
+# gitにあげるときに無視するファイル一覧
 *.out
 *.vscode
 *.DS_Store
