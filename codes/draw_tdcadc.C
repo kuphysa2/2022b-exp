@@ -8,7 +8,7 @@
 
 void draw_tdcadc()
 {
-    int exp_date = 227;
+    int exp_date = 310;
     int ana_date = 310;
 
     // Fitの統計情報を記載
