@@ -9,7 +9,7 @@
 #include "TMath.h"
 
 #define MAX_SEC 16 // ranges of E; E = E_0, E_1, ..., E_(MAX_SEC)
-#define MAX_ROW 100000
+#define MAX_ROW 500000
 
 void TQcorrection()
 {
@@ -36,13 +36,13 @@ void TQcorrection()
     {
         for (j = 0; j < 2; j++)
         {
-            histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 200, 0, 1000);
+            histograms[i][j] = new TH1F(Form("histogram%d", i), Form("ADC%d Distribution (E=%f)", j + 1, E[i]), 75, 50, 200);
         }
     }
 
     // input data
     row = 0;
-    std::ifstream ifs("../exp0227/a0228/exp0227_acalib.dat");
+    std::ifstream ifs("../exp0227/a0310/exp0227_acalib.dat");
     while (!ifs.eof())
     {
         ifs >> adc[0] >> adc[1] >> tdc;
@@ -77,27 +77,31 @@ void TQcorrection()
         // fitting
         f[i][0] = new TF1(Form("fit1%d", i), "gaus");
         histograms[i][0]->Fit(f[i][0], "", "", 0, 500);
+        f[i][1] = new TF1(Form("fit1%d", i), "gaus");
+        histograms[i][1]->Fit(f[i][1], "", "", 0, 500);
     }
 
 
     // output
     TCanvas *canvases[2];
-    canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
-    // canvases[1] = new TCanvas("canvas", "ADC2 Distributions", 800, 600);
-    canvases[0]->Divide(4, 4);
-    // canvases[1]->Divide(4, 4);
+    // canvases[0] = new TCanvas("canvas", "ADC1 Distributions", 800, 600);
+    // canvases[0]->Divide(4, 4);
+    canvases[1] = new TCanvas("canvas", "ADC2 Distributions", 800, 600);
+    canvases[1]->Divide(4, 4);
     for (int i = 0; i < MAX_SEC; i++)
     {
         // drawing ADC1 E[i] histogram
-        canvases[0]->cd(i + 1);
-        histograms[i][0]->Draw();
+        // canvases[0]->cd(i + 1);
+        // histograms[i][0]->Draw();
 
         // drawing ADC2 E[i] histogram
-        // canvases[1]->cd(i + 1);
-        // histograms[i][1]->Draw();
+        canvases[1]->cd(i + 1);
+        histograms[i][1]->Draw();
     }
-    canvases[0]->Update();
-    canvases[0]->Print("../exp0227/a0228/TQ_Tdistrib.pdf");
+    // canvases[0]->Update();
+    // canvases[0]->Print("../exp0227/a0310/TQ_Tdistrib1.pdf");
+    canvases[1]->Update();
+    canvases[1]->Print("../exp0227/a0310/TQ_Tdistrib2.pdf");
 
     return;
 }

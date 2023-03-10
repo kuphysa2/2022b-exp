@@ -14,7 +14,7 @@ const int MAX_COLS = 3;
 void time_energy()
 {
     Double_t data[MAX_ROWS][MAX_COLS];
-    std::ifstream file("../exp0227/a0228/exp0227_acalib.dat");
+    std::ifstream file("../exp0227/a0310/exp0227_acalib.dat");
     int row = 0;
 
     // input
@@ -30,7 +30,7 @@ void time_energy()
     file.close();
 
     int nBins = 200;
-    double xMin = -500;
+    double xMin = -100;
     double xMax = 2000;
     double yMin = 0;
     double yMax = 1000;
@@ -57,7 +57,7 @@ void time_energy()
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");
     canvases[0]->Update();
-    canvases[0]->Print("../exp0227/a0228/time_energy1.pdf");
+    canvases[0]->Print("../exp0227/a0310/time_energy1.pdf");
 
     // making 2D histogram of ADC2-TDC
     // TH2F *h2 = new TH2F("h2", "h2", nBins, xMin, xMax, nBins, yMin, yMax);

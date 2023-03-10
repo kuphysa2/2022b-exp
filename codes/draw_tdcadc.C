@@ -14,7 +14,7 @@ void draw_tdcadc()
     TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
     TH1S *hadc0 = new TH1S("h1", "h1", 1000, -500, 2800);
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, -500, 2800);
-    ifstream data("../exp0227/a0228/exp0227_acalib.dat");
+    ifstream data("../exp0227/a0310/exp0227_acalib.dat");
     double tdc, adc[] = {0, 0};
 
     // input
@@ -48,17 +48,17 @@ void draw_tdcadc()
     gPad->SetLogy(1);
     htdc->Draw();
     canvases[0]->Update();
-    canvases[0]->Print("../exp0227/a0228/tdc.pdf");
+    canvases[0]->Print("../exp0227/a0310/tdc.pdf");
 
     // drawing ADC1 histogram
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
     canvases[1]->Update();
-    canvases[1]->Print("../exp0227/a0228/adc1.pdf");
+    canvases[1]->Print("../exp0227/a0310/adc1.pdf");
 
     // drawing ADC2 histogram
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
     canvases[2]->Update();
-    canvases[2]->Print("../exp0227/a0228/adc2.pdf");
+    canvases[2]->Print("../exp0227/a0310/adc2.pdf");
 }

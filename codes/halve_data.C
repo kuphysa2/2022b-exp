@@ -1,12 +1,12 @@
 #include<stdio.h>
 
-#define MAX_ROWS 500000
+#define MAX_ROWS 700000
 #define MAX_COLS 3
 
 int main()
 {
-    FILE *in_file = fopen("../exp0227/a0228/exp0227.dat", "r");
-    FILE *out_file = fopen("../exp0227/a0228/exp0227_halved.dat", "w");
+    FILE *in_file = fopen("../exp0227/a0310/exp0227.dat", "r");
+    FILE *out_file = fopen("../exp0227/a0310/exp0227_halved.dat", "w");
     int data[MAX_ROWS][MAX_COLS] = {};
     int row, col, num_rows;
 

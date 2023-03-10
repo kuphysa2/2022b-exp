@@ -7,10 +7,10 @@
 // #define MAX_ROWS 1000000
 // #define MAX_COLS 3
 
-int tdc_calibrat(double factor = 0.2126, double ground = -6.4172)
+int tdc_calibrat(double factor = 0.246, double ground = -22.618)
 {
-    std::ifstream ifs("../exp0227/a0228/exp0227_halved.dat");
-    std::ofstream ofs("../exp0227/a0228/exp0227_tcalib.dat");
+    std::ifstream ifs("../exp0227/a0310/exp0227_halved.dat");
+    std::ofstream ofs("../exp0227/a0310/exp0227_tcalib.dat");
 
     int tdc, adc[2];
     double origin = 850;    // delay on TDC is 850 ns
@@ -30,8 +30,8 @@ int tdc_calibrat(double factor = 0.2126, double ground = -6.4172)
 int main(int argc, char *argv[])
 {
     // default values (cf. README.md)
-    double factor = 0.2126;
-    double ground = -6.4172;
+    double factor = 0.246;
+    double ground = -22.618;
 
     // changing values in case of input
     if (argc > 1)
