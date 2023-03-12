@@ -119,6 +119,7 @@ int TQcorrection(int adc_channel = 1)
     f1.SetParameters(1000, 50, 1, 0);
     graph->Fit("f1");
     graph->Draw("AP");
+    canvases[1]->Print(Form("../exp%04d/a%04d/EdT.pdf", exp_date, ana_date));
 
     // get the formula
     double p[4];

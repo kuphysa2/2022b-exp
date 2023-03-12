@@ -6,7 +6,7 @@
 #include<TROOT.h>
 #include<TStyle.h>
 
-void draw_tdcadc_TQ()
+void draw_tdc_TQ()
 {
     int exp_date = 227;
     int ana_date = 310;
@@ -56,19 +56,4 @@ void draw_tdcadc_TQ()
     char out_tdc_name[64];
     snprintf(out_tdc_name, 64, "../exp%04d/a%04d/tdcTQ.pdf", exp_date, ana_date);
     canvases[0]->Print(out_tdc_name);
-
-    // drawing ADC1 histogram
-    canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
-    hadc0->Draw();
-    canvases[1]->Update();
-    char out_adc1_name[64];
-    snprintf(out_adc1_name, 64, "../exp%04d/a%04d/adc1TQ.pdf", exp_date, ana_date);
-    canvases[0]->Print(out_adc1_name);
-
-    // drawing ADC2 histogram
-    canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
-    hadc1->Draw();
-    char out_adc2_name[64];
-    snprintf(out_adc2_name, 64, "../exp%04d/a%04d/adc2TQ.pdf", exp_date, ana_date);
-    canvases[1]->Print(out_adc2_name);
 }
