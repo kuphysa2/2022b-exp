@@ -5,7 +5,7 @@
 
 int main()
 {
-    int exp_date = 227;
+    int exp_date = 310;
     int ana_date = 310;
     char ifs_name[64], ofs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);

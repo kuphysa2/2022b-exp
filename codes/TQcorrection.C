@@ -23,7 +23,7 @@ int TQcorrection(int adc_channel = 1)
     // adc_channel to 0 or 1
     adc_channel--;
 
-    int exp_date = 227;
+    int exp_date = 310;
     int ana_date = 310;
     int row;
     int flag;
@@ -77,9 +77,9 @@ int TQcorrection(int adc_channel = 1)
     ifs.close();
 
     // Fittings and recording dt
-    char ofs_name[64];
-    sprintf(ofs_name, "../exp%04d/a%04d/dt%d.dat", exp_date, ana_date, adc_channel + 1);
-    std::ofstream ofs_dt(ofs_name);
+    char ofs_dt_name[64];
+    sprintf(ofs_dt_name, "../exp%04d/a%04d/dt%d.dat", exp_date, ana_date, adc_channel + 1);
+    std::ofstream ofs_dt(ofs_dt_name);
     TF1 *f[MAX_SEC];
     for (i = 0; i < MAX_SEC; i++)
     {
@@ -90,18 +90,63 @@ int TQcorrection(int adc_channel = 1)
         ofs_dt << E[i] << " " << dt[i] << std::endl;
     }
 
-    // output
+    // histograms output
     TCanvas *canvases[2];
-    TCanvas *canvas = new TCanvas("canvas", Form("ADC%d Distributions", adc_channel + 1), 1000, 800);
-    canvas->Divide(4, 4);
+    canvases[0] = new TCanvas("canvas", Form("ADC%d Distributions", adc_channel + 1), 1000, 800);
+    canvases[0]->Divide(4, 4);
     for (int i = 0; i < MAX_SEC; i++)
     {
         // drawing ADC E[i] histogram
-        canvas->cd(i + 1);
+        canvases[0]->cd(i + 1);
         histograms[i]->Draw();
     }
-    canvas->Update();
-    canvas->Print(Form("../exp%04d/a%04d/TQ_Tdistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[0]->Update();
+    canvases[0]->Print(Form("../exp%04d/a%04d/TQ_Tdistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
+
+    // E-dt fitting
+    canvases[1] = new TCanvas("canvas", Form("ADC%d; E; dt;", adc_channel));
+    canvases[1]->Divide(1, 1);
+    gStyle->SetOptFit();
+    double x[MAX_SEC], y[MAX_SEC];
+    TF1 f1("f1", "[0] / pow(x - [1], [2]) + [3]");
+    for (i = 0; i < MAX_SEC; i++)
+    {
+        x[i] = E[i];
+        y[i] = dt[i];
+    }
+    TGraph *graph = new TGraph(MAX_SEC, x, y);
+    graph->SetMarkerStyle(8);
+    f1.SetParameters(1000, 50, 1, 0);
+    graph->Fit("f1");
+    graph->Draw("AP");
+    canvases[1]->Print(Form("../exp%04d/a%04d/EdT.pdf", exp_date, ana_date));
+
+    // get the formula
+    double p[4];
+    for (j = 0; j < 4; j++)
+    {
+        p[j] = f1.GetParameter(j);
+    }
+
+    // rewrite data
+    char ofs_name[64];
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor.dat", exp_date, ana_date, exp_date);
+    std::ifstream ifs2(ifs_name);
+    std::ofstream ofs(ofs_name);
+    while (!ifs2.eof())
+    {
+        ifs2 >> adc[0] >> adc[1] >> tdc;
+        if (adc[0] > 20)
+        {
+            ofs << adc[0] << " " << adc[1] << " " << tdc - p[0] / pow(adc[0] - p[1], p[2]) - p[3] << std::endl;
+        }
+        else if (adc[1] > 20)
+        {
+            ofs << adc[0] << " " << adc[1] << " " << tdc - p[0] / pow(adc[1] - p[1], p[2]) - p[3] << std::endl;
+        }
+    }
+    ifs2.close();
+    ofs.close();
 
     return 0;
 }
