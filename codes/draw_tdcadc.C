@@ -9,7 +9,7 @@
 void draw_tdcadc()
 {
     int exp_date = 310;
-    int ana_date = 310;
+    int ana_date = 313;
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);

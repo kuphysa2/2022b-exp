@@ -15,8 +15,8 @@ void time_energy()
 {
     int channel = 1;    // 0 or 1
     channel--;
-    int exp_date = 227;
-    int ana_date = 310;
+    int exp_date = 310;
+    int ana_date = 313;
     char ifs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
     Double_t data[MAX_ROWS][MAX_COLS];
@@ -50,7 +50,7 @@ void time_energy()
     // making 2D histogram of ADC1-TDC
     TH2F *h1 = new TH2F("h1", "h1", nBins, xMin, xMax, nBins, yMin, yMax);
     char out1_name[64];
-    snprintf(out1_name, 64, "../exp%04d/a%04d/time_energy%d.pdf", exp_date, ana_date, channel);
+    snprintf(out1_name, 64, "../exp%04d/a%04d/time_energy%d.pdf", exp_date, ana_date, channel + 1);
     for (int i = 0; i < row; i++)
     {
         binX = h1->GetXaxis()->FindBin(data[i][channel]);
@@ -67,7 +67,7 @@ void time_energy()
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");
     canvases[0]->Update();
-    canvases[0]->Print();
+    canvases[0]->Print(out1_name);
 
     // making 2D histogram of ADC2-TDC
     // TH2F *h2 = new TH2F("h2", "h2", nBins, xMin, xMax, nBins, yMin, yMax);

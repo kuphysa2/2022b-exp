@@ -24,7 +24,7 @@ int TQcorrection(int adc_channel = 1)
     adc_channel--;
 
     int exp_date = 310;
-    int ana_date = 310;
+    int ana_date = 313;
     int row;
     int flag;
     Double_t tdc, adc[2];
@@ -119,7 +119,7 @@ int TQcorrection(int adc_channel = 1)
     f1.SetParameters(1000, 50, 1, 0);
     graph->Fit("f1");
     graph->Draw("AP");
-    canvases[1]->Print(Form("../exp%04d/a%04d/EdT.pdf", exp_date, ana_date));
+    canvases[1]->Print(Form("../exp%04d/a%04d/EdT%d.pdf", exp_date, ana_date, adc_channel + 1));
 
     // get the formula
     double p[4];
@@ -130,7 +130,7 @@ int TQcorrection(int adc_channel = 1)
 
     // rewrite data
     char ofs_name[64];
-    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
     std::ifstream ifs2(ifs_name);
     std::ofstream ofs(ofs_name);
     while (!ifs2.eof())

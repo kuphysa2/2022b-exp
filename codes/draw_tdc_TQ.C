@@ -8,10 +8,12 @@
 
 void draw_tdc_TQ()
 {
-    int exp_date = 227;
-    int ana_date = 310;
+    int exp_date = 310;
+    int ana_date = 313;
+    int adc_channel = 1;
     char ifs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor.dat", exp_date, ana_date, exp_date);
+    adc_channel--;
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
@@ -44,7 +46,7 @@ void draw_tdc_TQ()
     TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
     ftdc->SetParameters(1, 600, 100, -20);
     ftdc->SetParNames("N_0", "x_0", "#tau", "BG");
-    htdc->Fit("ftdc", "", "", 280, 360);
+    htdc->Fit("ftdc", "", "", 20, 360);
     // TF1 *f2 = new TF1(Form("fit%d", 2), "gaus", 1800, 2200);
 
     // drawing TDC histogram
@@ -54,6 +56,6 @@ void draw_tdc_TQ()
     htdc->Draw();
     canvases[0]->Update();
     char out_tdc_name[64];
-    snprintf(out_tdc_name, 64, "../exp%04d/a%04d/tdcTQ.pdf", exp_date, ana_date);
+    snprintf(out_tdc_name, 64, "../exp%04d/a%04d/tdcTQ%d.pdf", exp_date, ana_date, adc_channel + 1);
     canvases[0]->Print(out_tdc_name);
 }
