@@ -22,9 +22,12 @@
 13. `TQcorrection.C`の***実験日・解析日を確認***
 14. `TQcorrection.C`をch1に対して実行
 15. `draw_tdcadc_TQ.C`の***実験日・解析日を確認***
-16. `draw_tdcadc_TQ.C`を実行
+16. `draw_tdcadc_TQ.C`をch1に対して実行
+19. `time_energy_TQ.C`の***実験日・解析日を確認***
+19. `time_energy_TQ.C`をch1に対して実行
 17. `TQcorrection.C`をch2に対して実行
-18. `draw_tdcadc_TQ.C`を実行
+18. `draw_tdcadc_TQ.C`をch2に対して実行
+19. `time_energy_TQ.C`をch2に対して実行
 
 今あなたにできることはこれくらいです。
 他の計算なり資料作成なりをお願いします。
@@ -34,6 +37,9 @@
 * ファイル内リンク一括変更
   * `exp_date` に実験日、`ana_date` に解析日
   * 3/1なら301, 11/22なら1122と記述
+* ファアイル内チャンネル一括変更
+  * ADC ch1 は変数の宣言にて1, ch2 は 2
+  * そのあとコードでは1減らして実行
 * ターミナル上cppファイル実行手順
   1. `g++ (ファイル名).cpp -o (ファイル名除cpp)`
   2. `./(ファイル名除cpp) (必要に応じて引数) (引数) ...`
