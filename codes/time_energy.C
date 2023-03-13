@@ -14,9 +14,17 @@ const int MAX_COLS = 3;
 void time_energy()
 {
     int channel = 1;    // 0 or 1
-    channel--;
-    int exp_date = 310;
+    int exp_date = 216;
     int ana_date = 313;
+    double zMax = 1e3;
+    double zMin = 1;
+    double xMax = 2000;
+    double xMin = -100;
+    double yMax = 1000;
+    double yMin = 0;
+    int nBins = 200;
+    channel--;
+
     char ifs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
     Double_t data[MAX_ROWS][MAX_COLS];
@@ -35,13 +43,6 @@ void time_energy()
     }
     file.close();
 
-    int nBins = 200;
-    double xMin = -100;
-    double xMax = 2000;
-    double yMin = 0;
-    double yMax = 1000;
-    double zMin = 1;
-    double zMax = 1e3;
     int binX, binY;
     gStyle->SetOptStat(0);
 
@@ -68,24 +69,6 @@ void time_energy()
     h1->Draw("colz");
     canvases[0]->Update();
     canvases[0]->Print(out1_name);
-
-    // making 2D histogram of ADC2-TDC
-    // TH2F *h2 = new TH2F("h2", "h2", nBins, xMin, xMax, nBins, yMin, yMax);
-    // for (int i=0; i < row; i += 2)
-    // {
-    //     binX = h1->GetXaxis()->FindBin(data[i][1]);
-    //     binY = h1->GetXaxis()->FindBin(data[i][2]);
-    //     h1->Fill(data[i][1], data[i][2]);
-    // }
-    // h2->SetMaximum(zMax);
-    // h2->SetMinimum(zMin);
-    // h2->SetOption("colz");
-    // h2->SetOption("logz");
-    // h2->SetTitle("Time-Energy ADC2; energy [keV]; time [ns];");
-    // canvases[1] = new TCanvas("c2", "c2", 600, 600);
-    // canvases[1]->Update();
-    // canvases[1]->Print("../exp0227/a0228/time_energy2.pdf");
-    // h2->Draw("colz");
 
     return;
 }

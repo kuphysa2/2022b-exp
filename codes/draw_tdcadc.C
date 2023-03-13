@@ -8,15 +8,16 @@
 
 void draw_tdcadc()
 {
-    int exp_date = 310;
+    int exp_date = 216;
     int ana_date = 313;
+    int hist_minADC = 20;
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
 
     TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
-    TH1S *hadc0 = new TH1S("h1", "h1", 1000, -500, 2800);
-    TH1S *hadc1 = new TH1S("h1", "h1", 1000, -500, 2800);
+    TH1S *hadc0 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
+    TH1S *hadc1 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
 
     char ifs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
