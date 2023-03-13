@@ -13,7 +13,7 @@ const int MAX_COLS = 3;
 
 void time_energy_TQ()
 {
-    int channel = 1; // 0 or 1
+    int channel = 1; // 1 or 2
     channel--;
     int exp_date = 310;
     int ana_date = 313;
