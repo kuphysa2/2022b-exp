@@ -8,8 +8,8 @@
 
 void draw_tdcadc()
 {
-    int exp_date = 216;
-    int ana_date = 313;
+    int exp_date = 0;
+    int ana_date = 314;
     int hist_minADC = 20;
 
     // Fitの統計情報を記載

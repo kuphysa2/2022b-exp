@@ -23,7 +23,7 @@ int TQcorrection(int adc_channel = 1)
     // adc_channel to 0 or 1
     adc_channel--;
 
-    int exp_date = 0;
+    int exp_date = 310;
     int ana_date = 314;
     int row;
     int flag;

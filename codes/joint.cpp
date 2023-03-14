@@ -11,6 +11,7 @@ int main()
     ofstream ofs(ofs_name);
     ifstream ifs1("../exp0216/a0313/exp0216_acalib.dat");
     ifstream ifs2("../exp0227/a0310/exp0227_acalib.dat");
+    ifstream ifs3("../exp0310/a0314/exp0310_acalib.dat");
 
     double adc1, adc2, tdc;
 
@@ -22,6 +23,11 @@ int main()
     while (!ifs2.eof())
     {
         ifs2 >> adc1 >> adc2 >> tdc;
+        ofs << adc1 << " " << adc2 << " " << tdc << endl;
+    }
+    while (!ifs3.eof())
+    {
+        ifs3 >> adc1 >> adc2 >> tdc;
         ofs << adc1 << " " << adc2 << " " << tdc << endl;
     }
 

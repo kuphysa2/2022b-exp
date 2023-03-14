@@ -9,8 +9,8 @@
 
 int tdc_calibrat(double factor = 0.246, double ground = -22.618)
 {
-    int exp_date = 216;
-    int ana_date = 313;
+    int exp_date = 310;
+    int ana_date = 314;
     char ifs_name[64], ofs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
     snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
