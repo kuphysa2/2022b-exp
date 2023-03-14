@@ -14,8 +14,8 @@ const int MAX_COLS = 3;
 void time_energy()
 {
     int channel = 1;    // 0 or 1
-    int exp_date = 216;
-    int ana_date = 313;
+    int exp_date = 0;
+    int ana_date = 314;
     double zMax = 1e3;
     double zMin = 1;
     double xMax = 2000;
