@@ -55,8 +55,8 @@
 * 目的
   * データが２連続で現れるのを解消
 * 仕様
-  * `exp0000.dat`で連続する重複を除去
-  * 除去後のデータを`exp0000_halved.dat`に出力
+  * `exp????.dat`で連続する重複を除去
+  * 除去後のデータを`exp????_halved.dat`に出力
   * 一人で現れる重複なしデータの行を標準出力
 * 注意
   * 重複しないデータあり
@@ -71,8 +71,8 @@
 * 仕様
   * calibration式 $time=factor*TDC+ground$ から引数(factor, ground)を取得
     * デフォルト引数として[03/03計算結果](#tdc-table)を使用
-  * `exp0000_halved.dat`のTDCデータをcalibrate
-  * calibrated dataを`exp0000_tcalib.dat`に出力
+  * `exp????_halved.dat`のTDCデータをcalibrate
+  * calibrated dataを`exp????_tcalib.dat`に出力
 * 注意
   * 誤差伝播は未考慮
     * 誤差解析するそこの君は頑張ってね
@@ -97,8 +97,8 @@ TDC calibration data
     * デフォルト引数として[03/03計算結果](#tdc-table)を使用
       * 下記の表の通り
     * 第１変数から順に ADC1 factpr, ADC1 ground, ADC2 factor, ADC2 ground
-  * `exp0000_tcalib.dat`のADCデータをcalibrate
-  * calibrated dataを`exp0000_acalib.dat`に出力
+  * `exp????_tcalib.dat`のADCデータをcalibrate
+  * calibrated dataを`exp????_acalib.dat`に出力
 * 注意
   * 誤差伝播は未考慮
     * 誤差解析するそこの君は頑張ってね
@@ -124,7 +124,7 @@ TDC calibration data
 * 目的
   * TDC, ADCのヒストグラムを描画
 * 仕様
-  * `exp0000_acalib.dat`のデータをヒストグラムに
+  * `exp????_acalib.dat`のデータをヒストグラムに
   * 作成したヒストグラムを同時に出力
     * 1枚しか見えない時はウィンドウが重なっています
   * ヒストグラムをpdfで保存
@@ -136,7 +136,7 @@ TDC calibration data
   * TDC と ADC の分布を2次元カラープロットで表示
 * 仕様
   * 変数 `channel` で描画したいADCのチャンネルを変更可能
-  * `exp0000_acalib.dat` のデータを2次元ヒストグラムに
+  * `exp????_acalib.dat` のデータを2次元ヒストグラムに
 * 注意
   * ADC1, ADC2を同時に出力するのには未対応なので、2を見たければコード内 `channel` を書き換えてください
     * 最上段では **`channel = 1 or 2`**
@@ -156,8 +156,8 @@ TDC calibration data
     * フィッティングは`TQ_Tdistrib1.pdf`に出力
   * エネルギーとガウス曲線の中心をプロット・フィット
     * 結果は`EdT.pdf`に出力
-  * `exp0000_acalib.dat`のTDCデータを補正
-    * 補正データを`exp0000_TQcor.dat`に出力
+  * `exp????_acalib.dat`のTDCデータを補正
+    * 補正データを`exp????_TQcor.dat`に出力
 * 注意
   * フィッティングがうまくいっているか都度確認
 
@@ -166,7 +166,7 @@ TDC calibration data
 * 目的
   * TQ補正後のTDCデータ描画
 * 仕様
-  * `exp0000_TQcor.dat`のTDCを描画
+  * `exp????_TQcor.dat`のTDCを描画
   * ほかは全て`draw_tdcadc.C`と同じ
 * 注意
   * ADCは変わっていないので変更しない

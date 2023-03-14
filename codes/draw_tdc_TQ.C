@@ -8,8 +8,8 @@
 
 void draw_tdc_TQ()
 {
-    int exp_date = 310;
-    int ana_date = 313;
+    int exp_date = 0;
+    int ana_date = 314;
     int adc_channel = 1;
     char ifs_name[64];
     adc_channel--;
