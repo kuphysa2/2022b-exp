@@ -15,10 +15,10 @@ void time_energy_TQ()
 {
     int channel = 1; // 1 or 2
     channel--;
-    int exp_date = 310;
+    int exp_date = 0;
     int ana_date = 314;
     int nBins = 200;
-    double zMax = 300;
+    double zMax = 1000;
     double zMin = 1;
     double xMax = 2000;
     double xMin = 100;

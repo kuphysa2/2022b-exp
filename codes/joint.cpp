@@ -15,11 +15,11 @@ int main()
 
     double adc1, adc2, tdc;
 
-    while (!ifs1.eof())
-    {
-        ifs1 >> adc1 >> adc2 >> tdc;
-        ofs << adc1 << " " << adc2 << " " << tdc << endl;
-    }
+    // while (!ifs1.eof())
+    // {
+    //     ifs1 >> adc1 >> adc2 >> tdc;
+    //     ofs << adc1 << " " << adc2 << " " << tdc << endl;
+    // }
     while (!ifs2.eof())
     {
         ifs2 >> adc1 >> adc2 >> tdc;

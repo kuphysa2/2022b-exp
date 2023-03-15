@@ -8,12 +8,12 @@
 #include "TColor.h"
 #include "TMath.h"
 
-const int MAX_ROWS = 1000000;
+const int MAX_ROWS = 5000000;
 const int MAX_COLS = 3;
 
 void time_energy()
 {
-    int channel = 1;    // 0 or 1
+    int channel = 1;    // 1 or 2
     int exp_date = 0;
     int ana_date = 314;
     double zMax = 1000;
@@ -63,7 +63,7 @@ void time_energy()
     h1->SetOption("colz");
     h1->SetOption("logz");
     char title[64];
-    snprintf(title, 64, "Time-Energy ADC%d; energy[keV]; time[ns];", channel);
+    snprintf(title, 64, "Time-Energy ADC%d; energy[keV]; time[ns];", channel + 1);
     h1->SetTitle(title);
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");
