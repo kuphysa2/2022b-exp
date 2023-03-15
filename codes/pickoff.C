@@ -26,14 +26,18 @@ void pickoff()
     Double_t t[MAX_SEC + 1] = {}; // center of time ranges
     Double_t yt[MAX_SEC + 1] = {}, St[MAX_SEC + 1] = {};
     Double_t ft[MAX_SEC + 1];
+    Double_t p[3];
     int Erange4y[] = {500, 520};
     int Erange4S[] = {10, 450};
     int NBins4y = 20;
     int NBins4S = 200;
+    int NBins4TDC = 200;
+    double gFitRange[] = {72.5, 654};
     double t0 = 100;     // start point of t
     double dt = 50;      // t is set as t0, t0 + dt, ...
     double t_width = 25; // drawing histograms in range of t-t_width < t < t+t_width
     int i;               // for time range
+    int j;  // for others
 
     // initialize t; setting means of time ranges
     t[0] = 0;
@@ -45,6 +49,7 @@ void pickoff()
     // making histograms (before inputting data)
     TH1F *histogramsY[MAX_SEC + 1];
     TH1F *histogramsS[MAX_SEC + 1];
+    TH1S *histogramTDC = new TH1S("h1", "h1", NBins4TDC, 0, 1000);
     for (i = 0; i < MAX_SEC + 1; i++)
     {
         histogramsY[i] = new TH1F(Form("histogramY%d", i), Form("ADC%d distrib. at E~511 keV (t=%f)", adc_channel + 1, t[i]), NBins4y, Erange4y[0], Erange4y[1]);
@@ -61,6 +66,7 @@ void pickoff()
     {
         ifs >> adc[0] >> adc[1] >> tdc;
         row++;
+        histogramTDC->Fill(tdc);
         for (i = 0; i < MAX_SEC + 1; i++)
         {
             if (tdc > t[i] - t_width && tdc < t[i] + t_width)
@@ -100,7 +106,7 @@ void pickoff()
     }
 
     // histograms output
-    TCanvas *canvases[3];
+    TCanvas *canvases[4];
     canvases[0] = new TCanvas("canvas0", Form("ADC%d Distributions at E~511 keV", adc_channel + 1), 1000, 800);
     canvases[1] = new TCanvas("canvas1", Form("ADC%d Distrib. at %d<E<%d keV", adc_channel + 1, Erange4S[0], Erange4S[1]), 1000, 800);
     canvases[0]->Divide(4, 4);
@@ -120,7 +126,7 @@ void pickoff()
 
     // t-f(t) fitting
     canvases[2] = new TCanvas("canvas2", "f-t; t; f(t);");
-    canvases[1]->Divide(1, 1);
+    canvases[2]->Divide(1, 1);
     gStyle->SetOptFit();
     TF1 fFit("fFit", "[0] * exp(-x / [1]) + [2]");
     fFit.SetParameters(1, 511, 0);
@@ -129,7 +135,24 @@ void pickoff()
     graph_f->SetMarkerStyle(8);
     graph_f->Fit("fFit");
     graph_f->Draw("AP");
+    canvases[2]->Update();
     canvases[2]->Print(Form("../exp%04d/a%04d/ft%d.pdf", exp_date, ana_date, adc_channel + 1));
+    for (j = 0; j < 3; j++)
+    {
+        p[j] = fFit.GetParameter(j);
+    }
+
+    // g(t) fitting
+    canvases[3] = new TCanvas("canvas3", "g-t; t; g(t);", 600, 600);
+    canvases[3]->Divide(1, 1);
+    gStyle->SetOptFit();
+    gPad->SetLogy(1);
+    TF1 *gFit = new TF1("gFit", Form("[0] * (%f * exp(-x / %f) + %f + 1) * exp(-1 / [1] * (-%f * %f * exp(-x / %f) + (1 + %f) * x)) + [2]", p[0], p[1], p[2], p[0], p[1], p[1], p[2]));
+    gFit->SetParameters(1e4, 100, 100);
+    histogramTDC->Fit(gFit, "", "", gFitRange[0], gFitRange[1]);
+    histogramTDC->Draw();
+    canvases[3]->Update();
+    canvases[3]->Print(Form("../exp%04d/a%04d/tdcPick%d.pdf", exp_date, ana_date, adc_channel + 1));
 
     return;
 }
