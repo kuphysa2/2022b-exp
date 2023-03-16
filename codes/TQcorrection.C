@@ -12,8 +12,12 @@
 #define MAX_SEC 16 // ranges of E; E = E_0, E_1, ..., E_(MAX_SEC)
 #define MAX_ROW 600000
 
-int TQcorrection(int adc_channel = 1)
+int TQcorrection()
 {
+    int adc_channel = 1;    // 1 or 2
+    int exp_date = 0;
+    int ana_date = 316;
+
     // in case adc_channel is not valid
     if (adc_channel != 1 && adc_channel != 2)
     {
@@ -23,8 +27,6 @@ int TQcorrection(int adc_channel = 1)
     // adc_channel to 0 or 1
     adc_channel--;
 
-    int exp_date = 0;
-    int ana_date = 314;
     int row;
     int flag;
     Double_t tdc, adc[2];
@@ -151,18 +153,18 @@ int TQcorrection(int adc_channel = 1)
     return 0;
 }
 
-int main(int argc, char *argv[])
-{
-    // default value
-    int adc_channel = 1;    // 1 or 2
+// int main(int argc, char *argv[])
+// {
+//     // default value
+//     int adc_channel = 1;    // 1 or 2
 
-    // changing value in case of input
-    if (argc > 1)
-    {
-        adc_channel = atof(argv[1]);
-    }
+//     // changing value in case of input
+//     if (argc > 1)
+//     {
+//         adc_channel = atof(argv[1]);
+//     }
 
-    TQcorrection(adc_channel);
+//     TQcorrection(adc_channel);
 
-    return 0;
-}
+//     return 0;
+// }

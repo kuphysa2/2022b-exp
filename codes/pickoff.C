@@ -18,7 +18,7 @@ void pickoff()
 {
     int adc_channel = 1; // 1 or 2
     int exp_date = 0;
-    int ana_date = 314;
+    int ana_date = 316;
 
     adc_channel--;
     int row;
@@ -32,7 +32,7 @@ void pickoff()
     int NBins4y = 20;
     int NBins4S = 200;
     int NBins4TDC = 200;
-    double gFitRange[] = {72.5, 654};
+    double gFitRange[] = {72.5, 300};
     double t0 = 100;     // start point of t
     double dt = 50;      // t is set as t0, t0 + dt, ...
     double t_width = 25; // drawing histograms in range of t-t_width < t < t+t_width
@@ -130,7 +130,8 @@ void pickoff()
     gStyle->SetOptFit();
     TF1 fFit("fFit", "[0] * exp(-x / [1]) + [2]");
     fFit.SetParameters(1, 511, 0);
-    fFit.SetParLimits(0, 0, 1000);
+    fFit.SetParLimits(0, 0, 100000);
+    fFit.SetParLimits(2, 0, 100000);
     TGraph *graph_f = new TGraph(MAX_SEC + 1, t, ft);
     graph_f->SetMarkerStyle(8);
     graph_f->Fit("fFit");
@@ -148,7 +149,8 @@ void pickoff()
     gStyle->SetOptFit();
     gPad->SetLogy(1);
     TF1 *gFit = new TF1("gFit", Form("[0] * (%f * exp(-x / %f) + %f + 1) * exp(-1 / [1] * (-%f * %f * exp(-x / %f) + (1 + %f) * x)) + [2]", p[0], p[1], p[2], p[0], p[1], p[1], p[2]));
-    gFit->SetParameters(1e4, 100, 100);
+    gFit->SetParameters(1, 100, 100);
+    gFit->SetParNames("q0", "q1", "q2");
     histogramTDC->Fit(gFit, "", "", gFitRange[0], gFitRange[1]);
     histogramTDC->Draw();
     canvases[3]->Update();
