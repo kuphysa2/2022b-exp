@@ -2,6 +2,8 @@
 
 備忘録の意味も込めて、また解析の連携のためにも、コード設計の意図などを書き連ねます。
 
+一応齊藤はコード全体を把握しているつもりなので、わからないことがあったら言ってください。
+
 ## とりま使えればいいあなたへ
 
 以下のプロトコルで実行して下さい。
@@ -23,16 +25,32 @@
 14. `TQcorrection.C`をch1に対して実行
 15. `draw_tdcadc_TQ.C`の***実験日・解析日を確認***
 16. `draw_tdcadc_TQ.C`をch1に対して実行
-19. `time_energy_TQ.C`の***実験日・解析日を確認***
-19. `time_energy_TQ.C`をch1に対して実行
-17. `TQcorrection.C`をch2に対して実行
-18. `draw_tdcadc_TQ.C`をch2に対して実行
-19. `time_energy_TQ.C`をch2に対して実行
+17. `time_energy_TQ.C`の***実験日・解析日を確認***
+18. `time_energy_TQ.C`をch1に対して実行
+19. `pickoff.C`の***実験日・解析日等を確認***
+20. `pickoff.C`をch1に対して実行
+21. `TQcorrection.C`をch2に対して実行
+22. `draw_tdcadc_TQ.C`をch2に対して実行
+23. `time_energy_TQ.C`をch2に対して実行
+24. `pickoff.C`をch2に対して実行
 
 今あなたにできることはこれくらいです。
 他の計算なり資料作成なりをお願いします。
 
-## 全体を通して
+## フォルダ・ファイル名に関する諸注意
+
+* ファイル命名規則は`2022b-exp/exp(実験開始日)/a(解析日)/exp(実験開始日).dat`
+* `exp0227`と`exp0310`の統合データを`exp0000`として用意しておきました
+  * 藤木くん反省してください
+  * `exp0216`はdiscriminatorの値が異なるので除外
+  * calibrationが一定していない説があります
+* `exp0227/a0315`は`expo0310/0315`に移動しました
+  * 各種ファイル名も変更しています
+  * このフォルダ内で問題があったら至急連絡してください
+
+## コード仕様
+
+### 全体を通して
 
 * ファイル内リンク一括変更
   * `exp_date` に実験日、`ana_date` に解析日
@@ -50,7 +68,7 @@
     1. `g++ tdc_calib.cpp -o tdc_calib`
     2. `./tdc_calib 0.1 0.1`
 
-## halve_data.C
+### halve_data.C
 
 * 目的
   * データが２連続で現れるのを解消
@@ -64,7 +82,7 @@
     * 0227実験を始めた時に佐々木君が気づいてくれました。みなさんでお礼を言いましょう。ありがとう。
   * 0216実験を参照の際はデータ数に注意
 
-## tdc_calibrat.cpp
+### tdc_calibrat.cpp
 
 * 目的
   * TDCのcalibrationを実行
@@ -88,7 +106,7 @@ TDC calibration data
 | 12/19 | 0.2459 | 11.313  |
 | 03/03 | 0.2460 | -22.618 |
 
-## adc_calibrat.cpp
+### adc_calibrat.cpp
 
 * 目的
   * ADCのcalibrationを実行
@@ -119,7 +137,7 @@ TDC calibration data
 | 1 | 0.7355 | -245.15 |
 | 2 | 0.6937 | -162.87 |
 
-## draw_tdcadc.C
+### draw_tdcadc.C
 
 * 目的
   * TDC, ADCのヒストグラムを描画
@@ -130,7 +148,7 @@ TDC calibration data
   * ヒストグラムをpdfで保存
     * ファイル名は `tdc.pdf`, `adc1.pdf`, `adc2.pdf`
 
-## time_energy.C
+### time_energy.C
 
 * 目的
   * TDC と ADC の分布を2次元カラープロットで表示
@@ -143,7 +161,7 @@ TDC calibration data
   * 齊藤の個人パソコンで動きません。理由は知らん。
     * 大学のPCでは動くのでバージョンの問題?
 
-## TQcorrection.C
+### TQcorrection.C
 
 * 目的
   * TQ補正
@@ -157,16 +175,49 @@ TDC calibration data
   * エネルギーとガウス曲線の中心をプロット・フィット
     * 結果は`EdT.pdf`に出力
   * `exp????_acalib.dat`のTDCデータを補正
-    * 補正データを`exp????_TQcor.dat`に出力
+    * 補正データを`exp????_TQcor1.dat`に出力
 * 注意
   * フィッティングがうまくいっているか都度確認
 
-## draw_tdc_TQ.C
+### draw_tdc_TQ.C
 
 * 目的
   * TQ補正後のTDCデータ描画
 * 仕様
-  * `exp????_TQcor.dat`のTDCを描画
+  * `exp????_TQcor?.dat`のTDCを描画
   * ほかは全て`draw_tdcadc.C`と同じ
 * 注意
   * ADCは変わっていないので変更しない
+
+### time_energy_TQ.C
+
+* 目的
+  * TQ補正後のtime - energyを描画
+* 仕様
+  * `exp????_TQcor?.dat`のデータを描画
+  * ほかは全て`time_energy.C`と同じ
+
+### pickoff.C
+
+* 目的
+  * pick-off補正
+* 仕様
+  * `exp????_TQcor?.dat`を入力値として使用
+  * `MAX_ROW`注意
+  * 1次フィッティング
+    * 各時刻500 - 520 keV***エントリー数***をy(t)に
+    * 各時刻10 - 450 keV***エントリー数***をS(t)に
+    * y(t), S(t)を`yt1.dat`に記録
+      * 1列目 t, 2列目 y(t), 3列目 S(t)
+      * *1行目は t=0*
+    * fFitで細々した計算式をフィットし`ft1.pdf`に描画
+      * ***3/15現在、相関性が全くないので注意***
+  * 2次フィッティング
+    * fFitパラメーター値を使ってgFitを構成
+      * *パラメーター制限あり*
+    * gFitでTQ補正後のTDCをフィッティングして`tdcPick1.pdf`に描画
+* 注意
+  * ***結果を信用しないこと***
+    * 特にfFitの相関性が皆無
+    * あくまでプロトコルを追ったに過ぎません。正当性は別個に検証を要します。
+  * 各種パラメーターは原則コード上部の変数宣言部でいじれるようにしています
