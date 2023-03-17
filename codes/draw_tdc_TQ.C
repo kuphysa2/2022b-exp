@@ -28,7 +28,8 @@ void draw_tdc_TQ()
     while (!data.eof())
     {
         data >> adc[0] >> adc[1] >> tdc;
-        if (adc[0] < 520 || adc[1] < 520)
+        // if (adc[0] < 520 || adc[1] < 520)
+        // if (tdc > 50)
         {
             htdc->Fill(tdc);
             hadc0->Fill(adc[0]);
@@ -61,4 +62,5 @@ void draw_tdc_TQ()
     char out_tdc_name[64];
     snprintf(out_tdc_name, 64, "../exp%04d/a%04d/tdcTQ%d.pdf", exp_date, ana_date, adc_channel + 1);
     canvases[0]->Print(out_tdc_name);
+
 }

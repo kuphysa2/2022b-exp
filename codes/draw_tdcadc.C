@@ -11,7 +11,7 @@ void draw_tdcadc()
     int exp_date = 0;
     int ana_date = 317;
     int hist_minADC = 20;
-    int nBins = 500;
+    int nBins = 1000;
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
@@ -22,6 +22,7 @@ void draw_tdcadc()
 
     char ifs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor1.dat", exp_date, ana_date, exp_date);
     ifstream data(ifs_name);
     double tdc, adc[] = {0, 0};
 
@@ -29,9 +30,13 @@ void draw_tdcadc()
     while (!data.eof())
     {
         data >> adc[0] >> adc[1] >> tdc;
-        htdc->Fill(tdc);
-        hadc0->Fill(adc[0]);
-        hadc1->Fill(adc[1]);
+        if (tdc > 20)
+        {
+            htdc->Fill(tdc);
+            hadc0->Fill(adc[0]);
+            hadc1->Fill(adc[1]);
+        }
+
     }
 
     // graph titles
