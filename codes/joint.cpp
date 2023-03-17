@@ -6,12 +6,12 @@ int main()
 {
     int ana_date = 317;
     char ofs_name[64];
-    snprintf(ofs_name, 64, "../exp0000/a%04d/exp0000_acalib.dat", ana_date);
+    snprintf(ofs_name, 64, "../exp0000/a%04d/exp0000_cut(<50).dat", ana_date);
 
     ofstream ofs(ofs_name);
     // ifstream ifs1("../exp0216/a0313/exp0216_acalib.dat");
-    ifstream ifs2("../exp0227/a0310/exp0227_acalib.dat");
-    ifstream ifs3("../exp0310/a0317/exp0310_acalib.dat");
+    ifstream ifs2("../exp0227/a0310/exp0227.dat");
+    ifstream ifs3("../exp0310/a0317/exp0310.dat");
 
     double adc1, adc2, tdc;
 
@@ -20,15 +20,22 @@ int main()
     //     ifs1 >> adc1 >> adc2 >> tdc;
     //     ofs << adc1 << " " << adc2 << " " << tdc << endl;
     // }
+
     while (!ifs2.eof())
     {
         ifs2 >> adc1 >> adc2 >> tdc;
-        ofs << adc1 << " " << adc2 << " " << tdc << endl;
+        if (tdc>295.195)
+        {
+            ofs << adc1 << " " << adc2 << " " << tdc << endl;
+        }
     }
     while (!ifs3.eof())
     {
         ifs3 >> adc1 >> adc2 >> tdc;
-        ofs << adc1 << " " << adc2 << " " << tdc << endl;
+        if (tdc > 295.195)
+        {
+            ofs << adc1 << " " << adc2 << " " << tdc << endl;
+        }
     }
 
     return 0;
