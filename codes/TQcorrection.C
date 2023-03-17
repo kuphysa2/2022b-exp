@@ -14,7 +14,7 @@
 
 int TQcorrection()
 {
-    int adc_channel = 2;    // 1 or 2
+    int adc_channel = 1;    // 1 or 2
     int exp_date = 0;
     int ana_date = 317;
 

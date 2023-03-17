@@ -11,6 +11,8 @@
 const int MAX_ROWS = 1000000;
 const int MAX_COLS = 3;
 
+#define T_THD 50
+
 void time_energy_TQ()
 {
     int channel = 1; // 1 or 2
@@ -18,7 +20,7 @@ void time_energy_TQ()
     int ana_date = 317;
     channel--;
     int nBins = 200;
-    double zMax = 1000;
+    double zMax = 100;
     double zMin = 1;
     double xMax = 2000;
     double xMin = 100;
@@ -54,18 +56,22 @@ void time_energy_TQ()
     snprintf(out1_name, 64, "../exp%04d/a%04d/time_energyTQ%d.pdf", exp_date, ana_date, channel + 1);
     for (int i = 0; i < row; i++)
     {
-        binX = h1->GetXaxis()->FindBin(data[i][channel]);
-        binY = h1->GetXaxis()->FindBin(data[i][2]);
-        h1->Fill(data[i][channel], data[i][2]);
+        // if (data[i][2] > T_THD)
+        {
+            binX = h1->GetXaxis()->FindBin(data[i][channel]);
+            binY = h1->GetXaxis()->FindBin(data[i][2]);
+            h1->Fill(data[i][channel], data[i][2]);
+        }
     }
     h1->SetMinimum(zMin);
     h1->SetMaximum(zMax);
     h1->SetOption("colz");
-    h1->SetOption("logz");
+    // h1->SetOption("logz");
     char title[64];
     snprintf(title, 64, "Time-Energy ADC%d TQ corrected; energy[keV]; time[ns];", channel + 1);
     h1->SetTitle(title);
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
+    canvases[0].SetLogz();
     h1->Draw("colz");
     canvases[0]->Update();
     canvases[0]->Print(out1_name);

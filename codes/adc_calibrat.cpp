@@ -9,8 +9,8 @@ int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
     int exp_date = 0;
     int ana_date = 317;
     char ifs_name[64], ofs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/cut/exp%04d_tcalib_cut.dat", exp_date, ana_date, exp_date);
-    snprintf(ofs_name, 64, "../exp%04d/a%04d/cut/exp%04d_acalib_cut.dat", exp_date, ana_date, exp_date);
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
     std::ifstream ifs(ifs_name);
     std::ofstream ofs(ofs_name);
 
@@ -32,8 +32,8 @@ int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 int main(int argc, char *argv[])
 {
     // default values (cf. README.md)
-    double factor1 = 0.7472;
-    double ground1 = -113.58;
+    double factor1 = 0.7408;
+    double ground1 = -164.47;
     double factor2 = 0.755;
     double ground2 = -134.09;
 

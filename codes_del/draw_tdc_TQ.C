@@ -13,7 +13,7 @@ void draw_tdc_TQ()
     int ana_date = 316;
     char ifs_name[64];
     adc_channel--;
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/cut/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);

@@ -21,7 +21,7 @@ void draw_tdcadc()
     TH1S *hadc1 = new TH1S("h1", "h1", nBins, hist_minADC, 2800);
 
     char ifs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/cut/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
     ifstream data(ifs_name);
     double tdc, adc[] = {0, 0};
 
@@ -57,7 +57,7 @@ void draw_tdcadc()
     htdc->Draw();
     canvases[0]->Update();
     char tdc_ofs_name[64];
-    snprintf(tdc_ofs_name, 64, "../exp%04d/a%04d/cut/tdc.pdf", exp_date, ana_date);
+    snprintf(tdc_ofs_name, 64, "../exp%04d/a%04d/tdc.pdf", exp_date, ana_date);
     canvases[0]->Print(tdc_ofs_name);
 
     // drawing ADC1 histogram
@@ -65,7 +65,7 @@ void draw_tdcadc()
     hadc0->Draw();
     canvases[1]->Update();
     char adc1_ofs_name[64];
-    snprintf(adc1_ofs_name, 64, "../exp%04d/a%04d/cut/adc1.pdf", exp_date, ana_date);
+    snprintf(adc1_ofs_name, 64, "../exp%04d/a%04d/adc1.pdf", exp_date, ana_date);
     canvases[1]->Print(adc1_ofs_name);
 
     // drawing ADC2 histogram

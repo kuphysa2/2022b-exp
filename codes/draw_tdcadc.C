@@ -30,7 +30,7 @@ void draw_tdcadc()
     while (!data.eof())
     {
         data >> adc[0] >> adc[1] >> tdc;
-        // if (tdc < 50)
+        if (tdc <= 50)
         {
             htdc->Fill(tdc);
             hadc0->Fill(adc[0]);

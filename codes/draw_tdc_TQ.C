@@ -50,7 +50,7 @@ void draw_tdc_TQ()
     TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
     ftdc->SetParameters(1, 600, 100, -20);
     ftdc->SetParNames("N_0", "x_0", "#tau", "BG");
-    htdc->Fit("ftdc", "", "", 20, 360);
+    htdc->Fit("ftdc", "", "", 72.5, 654);
     // TF1 *f2 = new TF1(Form("fit%d", 2), "gaus", 1800, 2200);
 
     // drawing TDC histogram

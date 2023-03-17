@@ -16,7 +16,7 @@ using namespace std;
 
 void pickoff()
 {
-    int adc_channel = 2; // 1 or 2
+    int adc_channel = 1; // 1 or 2
     int exp_date = 0;
     int ana_date = 317;
 
@@ -27,12 +27,12 @@ void pickoff()
     Double_t yt[MAX_SEC + 1] = {}, St[MAX_SEC + 1] = {};
     Double_t ft[MAX_SEC + 1];
     Double_t p[3];
-    int Erange4y[] = {500, 520};
+    int Erange4y[] = {650, 750};
     int Erange4S[] = {10, 450};
     int NBins4y = 20;
     int NBins4S = 200;
     int NBins4TDC = 200;
-    double gFitRange[] = {72.5, 300};
+    double gFitRange[] = {50, 300};
     double t0 = 100;     // start point of t
     double dt = 50;      // t is set as t0, t0 + dt, ...
     double t_width = 25; // drawing histograms in range of t-t_width < t < t+t_width
@@ -66,7 +66,7 @@ void pickoff()
     {
         ifs >> adc[0] >> adc[1] >> tdc;
         row++;
-        if ((adc[0] > 20 && adc[0] < 520) || (adc[1] > 20 && adc[1] < 520))
+        if ((adc[0] > 20 && adc[0] < 750) || (adc[1] > 20 && adc[1] < 750))
             histogramTDC->Fill(tdc);
         for (i = 0; i < MAX_SEC + 1; i++)
         {
