@@ -28,9 +28,12 @@ void draw_tdc_TQ()
     while (!data.eof())
     {
         data >> adc[0] >> adc[1] >> tdc;
-        htdc->Fill(tdc);
-        hadc0->Fill(adc[0]);
-        hadc1->Fill(adc[1]);
+        if (adc[0] < 520 || adc[1] < 520)
+        {
+            htdc->Fill(tdc);
+            hadc0->Fill(adc[0]);
+            hadc1->Fill(adc[1]);
+        }
     }
 
     // graph titles

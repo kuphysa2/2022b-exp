@@ -66,7 +66,8 @@ void pickoff()
     {
         ifs >> adc[0] >> adc[1] >> tdc;
         row++;
-        histogramTDC->Fill(tdc);
+        if ((adc[0] > 20 && adc[0] < 520) || (adc[1] > 20 && adc[1] < 520))
+            histogramTDC->Fill(tdc);
         for (i = 0; i < MAX_SEC + 1; i++)
         {
             if (tdc > t[i] - t_width && tdc < t[i] + t_width)
