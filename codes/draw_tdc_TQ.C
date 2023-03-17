@@ -10,7 +10,7 @@ void draw_tdc_TQ()
 {
     int adc_channel = 1;
     int exp_date = 0;
-    int ana_date = 316;
+    int ana_date = 317;
     char ifs_name[64];
     adc_channel--;
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);

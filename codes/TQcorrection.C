@@ -10,13 +10,13 @@
 #include "TMath.h"
 
 #define MAX_SEC 16 // ranges of E; E = E_0, E_1, ..., E_(MAX_SEC)
-#define MAX_ROW 600000
+#define MAX_ROW 800000
 
 int TQcorrection()
 {
-    int adc_channel = 1;    // 1 or 2
+    int adc_channel = 2;    // 1 or 2
     int exp_date = 0;
-    int ana_date = 316;
+    int ana_date = 317;
 
     // in case adc_channel is not valid
     if (adc_channel != 1 && adc_channel != 2)

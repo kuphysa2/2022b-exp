@@ -4,14 +4,14 @@ using namespace std;
 
 int main()
 {
-    int ana_date = 316;
+    int ana_date = 317;
     char ofs_name[64];
     snprintf(ofs_name, 64, "../exp0000/a%04d/exp0000_acalib.dat", ana_date);
 
     ofstream ofs(ofs_name);
     // ifstream ifs1("../exp0216/a0313/exp0216_acalib.dat");
     ifstream ifs2("../exp0227/a0310/exp0227_acalib.dat");
-    ifstream ifs3("../exp0310/a0314/exp0310_acalib.dat");
+    ifstream ifs3("../exp0310/a0317/exp0310_acalib.dat");
 
     double adc1, adc2, tdc;
 

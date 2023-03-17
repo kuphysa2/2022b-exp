@@ -15,7 +15,7 @@ void time_energy_TQ()
 {
     int channel = 1; // 1 or 2
     int exp_date = 0;
-    int ana_date = 316;
+    int ana_date = 317;
     channel--;
     int nBins = 200;
     double zMax = 1000;
@@ -63,7 +63,7 @@ void time_energy_TQ()
     h1->SetOption("colz");
     h1->SetOption("logz");
     char title[64];
-    snprintf(title, 64, "Time-Energy ADC%d TQ corrected; energy[keV]; time[ns];", channel);
+    snprintf(title, 64, "Time-Energy ADC%d TQ corrected; energy[keV]; time[ns];", channel + 1);
     h1->SetTitle(title);
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");
