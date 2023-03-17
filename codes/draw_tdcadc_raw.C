@@ -8,8 +8,8 @@
 
 void draw_tdcadc_raw()
 {
-    int exp_date = 227;
-    int ana_date = 310;
+    int exp_date = 0;
+    int ana_date = 317;
     int hist_minADC = 0;
     int ADC1Fit0[] = {140, 160};
     int ADC2Fit0[] = {160, 200};
@@ -19,7 +19,7 @@ void draw_tdcadc_raw()
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
 
-    TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
+    TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 4000);
     TH1S *hadc0 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
 
