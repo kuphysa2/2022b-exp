@@ -5,11 +5,11 @@
 
 int main()
 {
-    int exp_date = 310;
+    int exp_date = 0;
     int ana_date = 317;
     char ifs_name[64], ofs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
-    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/cut/exp%04d_cut(<2845).dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, 64, "../exp%04d/a%04d/cut/exp%04d_halved_cut.dat", exp_date, ana_date, exp_date);
     std::ifstream ifs(ifs_name);
     std::ofstream ofs(ofs_name);
 
