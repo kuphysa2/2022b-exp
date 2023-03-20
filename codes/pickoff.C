@@ -12,13 +12,14 @@
 using namespace std;
 
 #define MAX_SEC 13 // ranges of t; t = t_0, t_1, ..., t_(MAX_SEC)
-#define MAX_ROW 600000
+#define MAX_ROW 1500000
+#define NAME_LEN 64
 
 void pickoff()
 {
     int adc_channel = 1; // 1 or 2
     int exp_date = 0;
-    int ana_date = 316;
+    int ana_date = 318;
 
     adc_channel--;
     int row;
@@ -32,12 +33,12 @@ void pickoff()
     int NBins4y = 20;
     int NBins4S = 200;
     int NBins4TDC = 200;
-    double gFitRange[] = {72.5, 300};
+    double gFitRange[] = {72.5, 654};
     double t0 = 100;     // start point of t
     double dt = 50;      // t is set as t0, t0 + dt, ...
     double t_width = 25; // drawing histograms in range of t-t_width < t < t+t_width
     int i;               // for time range
-    int j;  // for others
+    int j;               // for others
 
     // initialize t; setting means of time ranges
     t[0] = 0;
@@ -49,7 +50,7 @@ void pickoff()
     // making histograms (before inputting data)
     TH1F *histogramsY[MAX_SEC + 1];
     TH1F *histogramsS[MAX_SEC + 1];
-    TH1S *histogramTDC = new TH1S("h1", "h1", NBins4TDC, 0, 1000);
+    TH1S *histogramTDC = new TH1S("h1", Form("TDC pick-off Ch%d; t [ns]; count", adc_channel + 1), NBins4TDC, 0, 1000);
     for (i = 0; i < MAX_SEC + 1; i++)
     {
         histogramsY[i] = new TH1F(Form("histogramY%d", i), Form("ADC%d distrib. at E~511 keV (t=%f)", adc_channel + 1, t[i]), NBins4y, Erange4y[0], Erange4y[1]);
@@ -58,8 +59,8 @@ void pickoff()
 
     // input data
     row = 0;
-    char ifs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
+    char ifs_name[NAME_LEN];
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
     cout << ifs_name << endl;
     ifstream ifs(ifs_name);
     while (!ifs.eof())
@@ -91,8 +92,8 @@ void pickoff()
     ifs.close();
 
     // recording y(t)
-    char ofs_yt_name[64];
-    snprintf(ofs_yt_name, 64, "../exp%04d/a%04d/yt%d.dat", exp_date, ana_date, adc_channel + 1);
+    char ofs_yt_name[NAME_LEN];
+    snprintf(ofs_yt_name, NAME_LEN, "../exp%04d/a%04d/yt%d.dat", exp_date, ana_date, adc_channel + 1);
     ofstream ofs_yt(ofs_yt_name);
     for (i = 0; i < MAX_SEC + 1; i++)
     {
@@ -120,9 +121,11 @@ void pickoff()
         histogramsS[i]->Draw();
     }
     canvases[0]->Update();
-    canvases[0]->Print(Form("../exp%04d/a%04d/PickOff4yDistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[0]->Print(Form("../exp%04d/a%04d/pdf/PickOff4yDistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[0]->Print(Form("../exp%04d/a%04d/img/PickOff4yDistrib%d.png", exp_date, ana_date, adc_channel + 1));
     canvases[1]->Update();
-    canvases[1]->Print(Form("../exp%04d/a%04d/PickOff4SDistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[1]->Print(Form("../exp%04d/a%04d/pdf/PickOff4SDistrib%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[1]->Print(Form("../exp%04d/a%04d/img/PickOff4SDistrib%d.png", exp_date, ana_date, adc_channel + 1));
 
     // t-f(t) fitting
     canvases[2] = new TCanvas("canvas2", "f-t; t; f(t);");
@@ -135,9 +138,11 @@ void pickoff()
     TGraph *graph_f = new TGraph(MAX_SEC + 1, t, ft);
     graph_f->SetMarkerStyle(8);
     graph_f->Fit("fFit");
+    graph_f->SetTitle(Form("Pick-off f(t) Ch%d; t [ns]; f(t)", adc_channel + 1));
     graph_f->Draw("AP");
     canvases[2]->Update();
-    canvases[2]->Print(Form("../exp%04d/a%04d/ft%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[2]->Print(Form("../exp%04d/a%04d/pdf/ft%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[2]->Print(Form("../exp%04d/a%04d/img/ft%d.png", exp_date, ana_date, adc_channel + 1));
     for (j = 0; j < 3; j++)
     {
         p[j] = fFit.GetParameter(j);
@@ -154,7 +159,8 @@ void pickoff()
     histogramTDC->Fit(gFit, "", "", gFitRange[0], gFitRange[1]);
     histogramTDC->Draw();
     canvases[3]->Update();
-    canvases[3]->Print(Form("../exp%04d/a%04d/tdcPick%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[3]->Print(Form("../exp%04d/a%04d/pdf/tdcPick%d.pdf", exp_date, ana_date, adc_channel + 1));
+    canvases[3]->Print(Form("../exp%04d/a%04d/img/tdcPick%d.png", exp_date, ana_date, adc_channel + 1));
 
     return;
 }

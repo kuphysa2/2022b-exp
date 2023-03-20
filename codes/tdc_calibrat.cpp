@@ -4,21 +4,22 @@
 #include <string>
 #include <stdio.h>
 
-// #define MAX_ROWS 1000000
-// #define MAX_COLS 3
+#define NAME_LEN 64
 
 int tdc_calibrat(double factor = 0.246, double ground = -22.618)
 {
-    int exp_date = 310;
-    int ana_date = 316;
-    char ifs_name[64], ofs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
-    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
+    int exp_date = 0;
+    int ana_date = 318;
+
+    char ifs_name[NAME_LEN], ofs_name[NAME_LEN];
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date); // for exp0000
+    // snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
     std::ifstream ifs(ifs_name);
     std::ofstream ofs(ofs_name);
 
     int tdc, adc[2];
-    double origin = 850;    // delay on TDC is 850 ns
+    double origin = 850; // delay on TDC is 850 ns
     int row = 0;
 
     while (!ifs.eof())
@@ -29,7 +30,7 @@ int tdc_calibrat(double factor = 0.246, double ground = -22.618)
         ofs << adc[0] << " " << adc[1] << " " << origin - ((double)tdc * factor + ground) << std::endl;
     }
 
-        return 0;
+    return 0;
 }
 
 int main(int argc, char *argv[])

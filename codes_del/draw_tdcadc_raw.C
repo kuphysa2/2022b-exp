@@ -23,8 +23,8 @@ void draw_tdcadc_raw()
     TH1S *hadc0 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
     TH1S *hadc1 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
 
-    char ifs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/cut/exp%04d.dat", exp_date, ana_date, exp_date);
+    char ifs_name[NAME_LEN];
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/cut/exp%04d.dat", exp_date, ana_date, exp_date);
     ifstream data(ifs_name);
     double tdc, adc[] = {0, 0};
 
@@ -58,23 +58,23 @@ void draw_tdcadc_raw()
     gPad->SetLogy(1);
     htdc->Draw();
     canvases[0]->Update();
-    char tdc_ofs_name[64];
-    snprintf(tdc_ofs_name, 64, "../exp%04d/a%04d/cut/tdc_raw.pdf", exp_date, ana_date);
+    char tdc_ofs_name[NAME_LEN];
+    snprintf(tdc_ofs_name, NAME_LEN, "../exp%04d/a%04d/cut/tdc_raw.pdf", exp_date, ana_date);
     canvases[0]->Print(tdc_ofs_name);
 
     // drawing ADC1 histogram
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
     canvases[1]->Update();
-    char adc1_ofs_name[64];
-    snprintf(adc1_ofs_name, 64, "../exp%04d/a%04d/cut/adc1_raw.pdf", exp_date, ana_date);
+    char adc1_ofs_name[NAME_LEN];
+    snprintf(adc1_ofs_name, NAME_LEN, "../exp%04d/a%04d/cut/adc1_raw.pdf", exp_date, ana_date);
     canvases[1]->Print(adc1_ofs_name);
 
     // drawing ADC2 histogram
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
     canvases[2]->Update();
-    char adc2_ofs_name[64];
-    snprintf(adc2_ofs_name, 64, "../exp%04d/a%04d/cut/adc2_raw.pdf", exp_date, ana_date);
+    char adc2_ofs_name[NAME_LEN];
+    snprintf(adc2_ofs_name, NAME_LEN, "../exp%04d/a%04d/cut/adc2_raw.pdf", exp_date, ana_date);
     canvases[2]->Print(adc2_ofs_name);
 }

@@ -3,14 +3,15 @@
 #include <cstdlib>
 #include <string>
 #include <stdio.h>
+#define NAME_LEN 64
 
 int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 {
-    int exp_date = 310;
-    int ana_date = 316;
-    char ifs_name[64], ofs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
-    snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
+    int exp_date = 0;
+    int ana_date = 318;
+    char ifs_name[NAME_LEN], ofs_name[NAME_LEN];
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
+    snprintf(ofs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
     std::ifstream ifs(ifs_name);
     std::ofstream ofs(ofs_name);
 

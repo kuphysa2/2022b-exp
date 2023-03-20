@@ -8,9 +8,9 @@
 
 void draw_tdc_TQ()
 {
-    int adc_channel = 1;
+    int adc_channel = 2;
     int exp_date = 0;
-    int ana_date = 316;
+    int ana_date = 318;
     char ifs_name[64];
     adc_channel--;
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
@@ -35,18 +35,12 @@ void draw_tdc_TQ()
 
     // graph titles
     htdc->SetTitle("TDC; time [ns]; count;");
-    hadc0->SetTitle("ADC1; energy [keV]; count;");
-    hadc1->SetTitle("ADC2; energy [keV]; count;");
 
     // Fitting
-    TF1 *f0 = new TF1(Form("fit%d", 0), "gaus");
-    hadc0->Fit(f0, "", "", 200, 300);
-    TF1 *f1 = new TF1(Form("fit%d", 1), "gaus");
-    hadc1->Fit(f1, "", "", 1650, 1900);
     TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
     ftdc->SetParameters(1, 600, 100, -20);
     ftdc->SetParNames("N_0", "x_0", "#tau", "BG");
-    htdc->Fit("ftdc", "", "", 20, 360);
+    htdc->Fit("ftdc", "", "", 72.5, 654);
     // TF1 *f2 = new TF1(Form("fit%d", 2), "gaus", 1800, 2200);
 
     // drawing TDC histogram
@@ -56,6 +50,8 @@ void draw_tdc_TQ()
     htdc->Draw();
     canvases[0]->Update();
     char out_tdc_name[64];
-    snprintf(out_tdc_name, 64, "../exp%04d/a%04d/tdcTQ%d.pdf", exp_date, ana_date, adc_channel + 1);
+    snprintf(out_tdc_name, 64, "../exp%04d/a%04d/pdf/tdcTQ%d.pdf", exp_date, ana_date, adc_channel + 1);
+    canvases[0]->Print(out_tdc_name);
+    snprintf(out_tdc_name, 64, "../exp%04d/a%04d/img/tdcTQ%d.png", exp_date, ana_date, adc_channel + 1);
     canvases[0]->Print(out_tdc_name);
 }

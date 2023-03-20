@@ -5,26 +5,28 @@
 #include <TH1D.h>
 #include <TROOT.h>
 #include <TStyle.h>
+#define NAME_LEN 64
 
 void draw_tdcadc_raw()
 {
-    int exp_date = 227;
-    int ana_date = 310;
-    int hist_minADC = 0;
-    int ADC1Fit0[] = {140, 160};
-    int ADC2Fit0[] = {160, 200};
-    int ADC1Fit1274[] = {1800, 2100};
-    int ADC2Fit1274[] = {1800, 2000};
+    int exp_date = 0;
+    int ana_date = 318;
+    int adc_range[] = {0, 4100};
+    int tdc_range[] = {0, 4096};
+    int adc_nBins = 1000;
+    int tdc_nBins = 1000;
+    int adc1_height = 4000;
+    int adc2_height = 4000;
+    int adc_zoom_range[] = {0, 2500};
 
-    // Fitの統計情報を記載
-    gStyle->SetOptFit(1111);
+    TH1S *htdc = new TH1S("h1", "h1", tdc_nBins, tdc_range[0], tdc_range[1]);
+    TH1S *hadc0 = new TH1S("h1", "h1", adc_nBins, adc_range[0], adc_range[1]);
+    TH1S *hadc1 = new TH1S("h1", "h1", adc_nBins, adc_range[0], adc_range[1]);
+    TH1S *hadc0z = new TH1S("h1", "h1", adc_nBins, adc_zoom_range[0], adc_zoom_range[1]);
+    TH1S *hadc1z = new TH1S("h1", "h1", adc_nBins, adc_zoom_range[0], adc_zoom_range[1]);
 
-    TH1S *htdc = new TH1S("h1", "h1", 1000, 0, 1000);
-    TH1S *hadc0 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
-    TH1S *hadc1 = new TH1S("h1", "h1", 1000, hist_minADC, 2800);
-
-    char ifs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
+    char ifs_name[NAME_LEN];
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
     ifstream data(ifs_name);
     double tdc, adc[] = {0, 0};
 
@@ -35,46 +37,56 @@ void draw_tdcadc_raw()
         htdc->Fill(tdc);
         hadc0->Fill(adc[0]);
         hadc1->Fill(adc[1]);
+        hadc0z->Fill(adc[0]);
+        hadc1z->Fill(adc[1]);
     }
 
     // graph titles
-    htdc->SetTitle("TDC; time [TDS]; count;");
+    htdc->SetTitle("TDC; time [TDC]; count;");
     hadc0->SetTitle("ADC1 raw; energy [ADC]; count;");
     hadc1->SetTitle("ADC2 raw; energy [ADC]; count;");
+    hadc0z->SetTitle("ADC1 raw; energy [ADC]; count;");
+    hadc1z->SetTitle("ADC2 raw; energy [ADC]; count;");
 
-    // Fitting
-    TF1 *f00 = new TF1(Form("fit%d", 0), "gaus");
-    hadc0->Fit(f00, "", "", ADC1Fit0[0], ADC1Fit0[1]);
-    TF1 *f0 = new TF1(Form("fit%d", 0), "gaus");
-    hadc0->Fit(f0, "", "", ADC1Fit1274[0], ADC1Fit1274[1]);
-    TF1 *f10 = new TF1(Form("fit%d", 1), "gaus");
-    hadc1->Fit(f10, "", "", ADC2Fit0[0], ADC2Fit0[1]);
-    TF1 *f1 = new TF1(Form("fit%d", 1), "gaus");
-    hadc1->Fit(f1, "", "", ADC2Fit1274[0], ADC2Fit1274[1]);
-
+    TCanvas *canvases[5];
     // drawing TDC histogram
-    TCanvas *canvases[4];
     canvases[0] = new TCanvas(TString::Format("canvas%d", 0), "", 500, 500);
     gPad->SetLogy(1);
     htdc->Draw();
     canvases[0]->Update();
-    char tdc_ofs_name[64];
-    snprintf(tdc_ofs_name, 64, "../exp%04d/a%04d/tdc_raw.pdf", exp_date, ana_date);
+    char tdc_ofs_name[NAME_LEN];
+    snprintf(tdc_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/tdc_raw.pdf", exp_date, ana_date);
+    canvases[0]->Print(tdc_ofs_name);
+    snprintf(tdc_ofs_name, NAME_LEN, "../exp%04d/a%04d/img/tdc_raw.png", exp_date, ana_date);
     canvases[0]->Print(tdc_ofs_name);
 
     // drawing ADC1 histogram
     canvases[1] = new TCanvas(TString::Format("canvas%d", 1), "", 500, 500);
     hadc0->Draw();
     canvases[1]->Update();
-    char adc1_ofs_name[64];
-    snprintf(adc1_ofs_name, 64, "../exp%04d/a%04d/adc1_raw.pdf", exp_date, ana_date);
+    char adc1_ofs_name[NAME_LEN];
+    snprintf(adc1_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/adc1_raw.pdf", exp_date, ana_date);
     canvases[1]->Print(adc1_ofs_name);
+    snprintf(adc1_ofs_name, NAME_LEN, "../exp%04d/a%04d/img/adc1_raw.png", exp_date, ana_date);
+    canvases[1]->Print(adc1_ofs_name);
+    canvases[3] = new TCanvas(TString::Format("canvas%d", 3), "", 500, 500);
+    hadc0z->SetMaximum(adc1_height);
+    hadc0z->Draw();
+    canvases[3]->Print(Form("../exp%04d/a%04d/pdf/adc1_raw_zoom.pdf", exp_date, ana_date));
+    canvases[3]->Print(Form("../exp%04d/a%04d/img/adc1_raw_zoom.png", exp_date, ana_date));
 
     // drawing ADC2 histogram
     canvases[2] = new TCanvas(TString::Format("canvas%d", 2), "", 500, 500);
     hadc1->Draw();
     canvases[2]->Update();
-    char adc2_ofs_name[64];
-    snprintf(adc2_ofs_name, 64, "../exp%04d/a%04d/adc2_raw.pdf", exp_date, ana_date);
+    char adc2_ofs_name[NAME_LEN];
+    snprintf(adc2_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/adc2_raw.pdf", exp_date, ana_date);
     canvases[2]->Print(adc2_ofs_name);
+    snprintf(adc2_ofs_name, NAME_LEN, "../exp%04d/a%04d/img/adc2_raw.png", exp_date, ana_date);
+    canvases[2]->Print(adc2_ofs_name);
+    canvases[4] = new TCanvas(TString::Format("canvas%d", 4), "", 500, 500);
+    hadc1z->SetMaximum(adc1_height);
+    hadc1z->Draw();
+    canvases[4]->Print(Form("../exp%04d/a%04d/pdf/adc2_raw_zoom.pdf", exp_date, ana_date));
+    canvases[4]->Print(Form("../exp%04d/a%04d/img/adc2_raw_zoom.png", exp_date, ana_date));
 }
