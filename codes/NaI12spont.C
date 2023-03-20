@@ -17,12 +17,12 @@ void NaI12spont()
     int channel = 1; // 1 or 2
     int exp_date = 0;
     int ana_date = 318;
-    double zMax = 1000;
+    double zMax = 20;
     double zMin = 1;
-    double xMax = 2000;
-    double xMin = 20;
-    double yMax = 1000;
-    double yMin = 0;
+    double xMax = 1500;
+    double xMin = -20;
+    double yMax = 1500;
+    double yMin = -20;
     int nBins = 200;
     channel--;
 
