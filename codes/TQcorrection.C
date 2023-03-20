@@ -15,7 +15,7 @@
 
 int TQcorrection()
 {
-    int adc_channel = 2; // 1 or 2
+    int adc_channel = 1; // 1 or 2
     int exp_date = 0;
     int ana_date = 318;
 
@@ -121,7 +121,7 @@ int TQcorrection()
     graph->SetMarkerStyle(8);
     f1.SetParameters(1000, 50, 1, 0);
     graph->Fit("f1");
-    graph->SetTitle(Form("TQ correction f(t) Ch%d; t [ns]; f(t);", adc_channel + 1));
+    graph->SetTitle(Form("TQ correction f(t) Ch%d; E [keV]; dT [ns];", adc_channel + 1));
     graph->Draw("AP");
     canvases[1]->Print(Form("../exp%04d/a%04d/pdf/EdT%d.pdf", exp_date, ana_date, adc_channel + 1));
     canvases[1]->Print(Form("../exp%04d/a%04d/img/EdT%d.png", exp_date, ana_date, adc_channel + 1));
