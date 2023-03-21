@@ -19,7 +19,7 @@ void pickoff()
 {
     int adc_channel = 1; // 1 or 2
     int exp_date = 0;
-    int ana_date = 318;
+    int ana_date = 320;
 
     adc_channel--;
     int row;

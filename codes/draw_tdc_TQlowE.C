@@ -8,9 +8,9 @@
 
 void draw_tdc_TQlowE()
 {
-    int adc_channel = 1;
+    int adc_channel = 2;
     int exp_date = 0;
-    int ana_date = 318;
+    int ana_date = 320;
     int max_energy = 450;
     char ifs_name[64];
     adc_channel--;

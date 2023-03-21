@@ -8,7 +8,7 @@
 int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 {
     int exp_date = 0;
-    int ana_date = 318;
+    int ana_date = 320;
     char ifs_name[NAME_LEN], ofs_name[NAME_LEN];
     snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
     snprintf(ofs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);
@@ -33,10 +33,10 @@ int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 int main(int argc, char *argv[])
 {
     // default values (cf. README.md)
-    double factor1 = 0.7472;
-    double ground1 = -113.58;
-    double factor2 = 0.755;
-    double ground2 = -134.09;
+    double factor1 = 0.73742;
+    double ground1 = -112.825;
+    double factor2 = 0.761194;
+    double ground2 = -137.776;
 
     // changing values in case of input
     if (argc > 1)

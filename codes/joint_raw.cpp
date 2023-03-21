@@ -5,13 +5,13 @@ using namespace std;
 
 int main()
 {
-    int ana_date = 318;
+    int ana_date = 320;
     char ofs_name[NAME_LEN];
     snprintf(ofs_name, NAME_LEN, "../exp0000/a%04d/exp0000.dat", ana_date);
 
     ofstream ofs(ofs_name);
     ifstream ifs2("../exp0227/a0310/exp0227.dat");
-    ifstream ifs3("../exp0310/a0317/exp0310.dat");
+    ifstream ifs3("../exp0310/a0320/exp0310.dat");
 
     double adc1, adc2, tdc;
     int entry = 0;
