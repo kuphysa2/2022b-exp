@@ -17,9 +17,9 @@ using namespace std;
 
 void pickoff()
 {
-    int adc_channel = 1; // 1 or 2
-    int exp_date = 0;
-    int ana_date = 320;
+    int adc_channel = 2; // 1 or 2
+    int exp_date = 320;
+    int ana_date = 322;
 
     adc_channel--;
     int row;

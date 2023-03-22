@@ -13,9 +13,9 @@ const int MAX_COLS = 3;
 
 void time_energy_TQ()
 {
-    int channel = 1; // 1 or 2
-    int exp_date = 0;
-    int ana_date = 316;
+    int channel = 2; // 1 or 2
+    int exp_date = 320;
+    int ana_date = 322;
     channel--;
     int nBins = 200;
     double zMax = 1000;
@@ -51,7 +51,7 @@ void time_energy_TQ()
     // making 2D histogram of ADC1-TDC
     TH2F *h1 = new TH2F("h1", "h1", nBins, xMin, xMax, nBins, yMin, yMax);
     char out1_name[64];
-    snprintf(out1_name, 64, "../exp%04d/a%04d/time_energyTQ%d.pdf", exp_date, ana_date, channel + 1);
+    snprintf(out1_name, 64, "../exp%04d/a%04d/pdf/time_energyTQ%d.pdf", exp_date, ana_date, channel + 1);
     for (int i = 0; i < row; i++)
     {
         binX = h1->GetXaxis()->FindBin(data[i][channel]);
@@ -63,7 +63,7 @@ void time_energy_TQ()
     h1->SetOption("colz");
     h1->SetOption("logz");
     char title[64];
-    snprintf(title, 64, "Time-Energy ADC%d TQ corrected; energy[keV]; time[ns];", channel);
+    snprintf(title, 64, "Time-Energy ADC%d TQ corrected; energy[keV]; time[ns];", channel + 1);
     h1->SetTitle(title);
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");

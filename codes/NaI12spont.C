@@ -15,8 +15,8 @@ const int MAX_COLS = 3;
 void NaI12spont()
 {
     int channel = 1; // 1 or 2
-    int exp_date = 0;
-    int ana_date = 320;
+    int exp_date = 320;
+    int ana_date = 322;
     double zMax = 20;
     double zMin = 1;
     double xMax = 1500;
