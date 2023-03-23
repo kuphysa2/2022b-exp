@@ -14,9 +14,9 @@ const int MAX_COLS = 3;
 
 void NaI12spont()
 {
-    int channel = 1; // 1 or 2
+    int channel = 2; // 1 or 2
     int exp_date = 320;
-    int ana_date = 322;
+    int ana_date = 323;
     double zMax = 20;
     double zMin = 1;
     double xMax = 1500;
@@ -62,6 +62,7 @@ void NaI12spont()
     h1->SetMaximum(zMax);
     h1->SetOption("colz");
     h1->SetOption("logz");
+    gStyle->SetOptLogz();
     char title[NAME_LEN];
     snprintf(title, NAME_LEN, "ADC1 ADC2; ADC1 energy[keV]; ADC2 energy[keV];");
     h1->SetTitle(title);

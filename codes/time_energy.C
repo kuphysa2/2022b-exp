@@ -14,10 +14,10 @@ const int MAX_COLS = 3;
 
 void time_energy()
 {
-    int channel = 2; // 1 or 2
+    int channel = 1; // 1 or 2
     int exp_date = 320;
-    int ana_date = 322;
-    double zMax = 1000;
+    int ana_date = 323;
+    double zMax = 500;
     double zMin = 1;
     double xMax = 2000;
     double xMin = 20;
@@ -62,6 +62,7 @@ void time_energy()
     h1->SetMaximum(zMax);
     h1->SetOption("colz");
     h1->SetOption("logz");
+    gStyle->SetOptLogz();
     char title[NAME_LEN];
     snprintf(title, NAME_LEN, "Time-Energy ADC%d; energy[keV]; time[ns];", channel + 1);
     h1->SetTitle(title);

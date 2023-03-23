@@ -10,7 +10,7 @@ void draw_tdc_TQ()
 {
     int adc_channel = 1;
     int exp_date = 320;
-    int ana_date = 322;
+    int ana_date = 323;
     char ifs_name[64];
     adc_channel--;
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, adc_channel + 1);
@@ -34,7 +34,7 @@ void draw_tdc_TQ()
     }
 
     // graph titles
-    htdc->SetTitle("TDC; time [ns]; count;");
+    htdc->SetTitle(Form("TDC Ch. %d corrected; time [ns]; count;", adc_channel + 1));
 
     // Fitting
     TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
