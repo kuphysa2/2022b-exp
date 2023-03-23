@@ -10,7 +10,7 @@
 void draw_tdcadc_raw()
 {
     int exp_date = 320;
-    int ana_date = 322;
+    int ana_date = 323;
     int adc_range[] = {0, 4100};
     int tdc_range[] = {0, 4096};
     int adc_nBins = 1000;
