@@ -8,7 +8,7 @@
 int adc_calibrat(double factor1, double ground1, double factor2, double ground2)
 {
     int exp_date = 320;
-    int ana_date = 322;
+    int ana_date = 323;
     char ifs_name[NAME_LEN], ofs_name[NAME_LEN];
     snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_tcalib.dat", exp_date, ana_date, exp_date);
     snprintf(ofs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);

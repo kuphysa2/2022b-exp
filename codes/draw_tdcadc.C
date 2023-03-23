@@ -10,13 +10,13 @@
 void draw_tdcadc()
 {
     int exp_date = 320;
-    int ana_date = 322;
+    int ana_date = 323;
     int hist_minADC = 20;
     int tdc_nBins = 1000;
     int adc_nBins = 1000;
     int tdc_range[] = {0, 1000};
     int adc_range[] = {20, 2800};
-    int tFit_range[] = {280, 360};
+    int tFit_range[] = {72, 654};
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);
