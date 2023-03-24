@@ -7,10 +7,11 @@
 #include <TStyle.h>
 #define NAME_LEN 64
 #define TIME_FLOOR 20
+#define MAX_ENERGY 450
 
-void draw_tdc_TQ()
+void draw_tdc_TQlowE()
 {
-    int adc_channel = 1;
+    int adc_channel = 2;
     int exp_date = 0;
     int ana_date = 320;
     double tFitRange[] = {72.5, 654};
@@ -31,7 +32,7 @@ void draw_tdc_TQ()
     while (!data.eof())
     {
         data >> adc[0] >> adc[1] >> tdc;
-        if (tdc > TIME_FLOOR)
+        if (tdc > TIME_FLOOR && adc[adc_channel] < MAX_ENERGY)
         {
             htdc->Fill(tdc);
             hadc0->Fill(adc[0]);
@@ -40,7 +41,7 @@ void draw_tdc_TQ()
     }
 
     // graph titles
-    htdc->SetTitle(Form("TDC Ch. %d corrected (t>%d); time [ns]; count;", adc_channel + 1, TIME_FLOOR));
+    htdc->SetTitle(Form("TDC Ch. %d corrected (t>%d, ADC%d<%d); time [ns]; count;", adc_channel + 1, TIME_FLOOR, adc_channel + 1, MAX_ENERGY));
 
     // Fitting
     TF1 *ftdc = new TF1("ftdc", "[0] * exp(-(x + [1]) / [2]) + [3]");
@@ -55,6 +56,6 @@ void draw_tdc_TQ()
     htdc->Draw();
     canvases[0]->Update();
     char out_tdc_name[NAME_LEN];
-    snprintf(out_tdc_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/tdcTQ%d.pdf", exp_date, ana_date, adc_channel + 1);
+    snprintf(out_tdc_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/tdcTQ%dlowE.pdf", exp_date, ana_date, adc_channel + 1);
     canvases[0]->Print(out_tdc_name);
 }
