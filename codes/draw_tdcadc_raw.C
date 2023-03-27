@@ -10,13 +10,13 @@
 void draw_tdcadc_raw()
 {
     int exp_date = 320;
-    int ana_date = 323;
+    int ana_date = 327;
     int adc_range[] = {0, 4100};
     int tdc_range[] = {0, 4096};
     int adc_nBins = 1000;
     int tdc_nBins = 1000;
-    int adc1_height = 400;
-    int adc2_height = 400;
+    int adc1_height = 1000;
+    int adc2_height = 1000;
     int adc_zoom_range[] = {0, 2500};
 
     TH1S *htdc = new TH1S("h1", "h1", tdc_nBins, tdc_range[0], tdc_range[1]);

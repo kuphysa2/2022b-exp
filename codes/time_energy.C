@@ -16,7 +16,7 @@ void time_energy()
 {
     int channel = 1; // 1 or 2
     int exp_date = 320;
-    int ana_date = 323;
+    int ana_date = 327;
     double zMax = 500;
     double zMin = 1;
     double xMax = 2000;

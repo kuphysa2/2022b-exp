@@ -6,12 +6,12 @@
 #include <TROOT.h>
 #include <TStyle.h>
 #define NAME_LEN 64
-#define TIME_FLOOR 20
+#define TIME_FLOOR 50
 #define MAX_ENERGY 450
 
 void draw_tdc_TQlowE()
 {
-    int adc_channel = 2;
+    int adc_channel = 1;
     int exp_date = 0;
     int ana_date = 320;
     double tFitRange[] = {72.5, 654};

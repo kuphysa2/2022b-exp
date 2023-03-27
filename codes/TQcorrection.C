@@ -17,7 +17,7 @@ int TQcorrection()
 {
     int adc_channel = 1; // 1 or 2
     int exp_date = 320;
-    int ana_date = 323;
+    int ana_date = 327;
 
     // in case adc_channel is not valid
     if (adc_channel != 1 && adc_channel != 2)

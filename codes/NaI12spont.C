@@ -14,9 +14,8 @@ const int MAX_COLS = 3;
 
 void NaI12spont()
 {
-    int channel = 2; // 1 or 2
     int exp_date = 320;
-    int ana_date = 323;
+    int ana_date = 327;
     double zMax = 20;
     double zMin = 1;
     double xMax = 1500;
@@ -24,7 +23,6 @@ void NaI12spont()
     double yMax = 1500;
     double yMin = -20;
     int nBins = 200;
-    channel--;
 
     char ifs_name[NAME_LEN];
     snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_acalib.dat", exp_date, ana_date, exp_date);

@@ -8,6 +8,8 @@
 #include "TColor.h"
 #include "TMath.h"
 
+#define TIME_FLOOR 50
+
 const int MAX_ROWS = 1000000;
 const int MAX_COLS = 3;
 
@@ -15,7 +17,7 @@ void time_energy_TQ()
 {
     int channel = 1; // 1 or 2
     int exp_date = 0;
-    int ana_date = 316;
+    int ana_date = 320;
     channel--;
     int nBins = 200;
     double zMax = 1000;
@@ -26,7 +28,7 @@ void time_energy_TQ()
     double yMin = -100;
 
     char ifs_name[64];
-    snprintf(ifs_name, 64, "../exp%04d/a%04d/cut/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, channel + 1);
+    snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d_TQcor%d.dat", exp_date, ana_date, exp_date, channel + 1);
     Double_t data[MAX_ROWS][MAX_COLS];
     std::ifstream file(ifs_name);
     int row = 0;
@@ -51,19 +53,22 @@ void time_energy_TQ()
     // making 2D histogram of ADC1-TDC
     TH2F *h1 = new TH2F("h1", "h1", nBins, xMin, xMax, nBins, yMin, yMax);
     char out1_name[64];
-    snprintf(out1_name, 64, "../exp%04d/a%04d/cut/time_energyTQ%d.pdf", exp_date, ana_date, channel + 1);
+    snprintf(out1_name, 64, "../exp%04d/a%04d/pdf/t_cut/time_energyTQ%d_Tover%d.pdf", exp_date, ana_date, channel + 1, TIME_FLOOR);
     for (int i = 0; i < row; i++)
     {
-        binX = h1->GetXaxis()->FindBin(data[i][channel]);
-        binY = h1->GetXaxis()->FindBin(data[i][2]);
-        h1->Fill(data[i][channel], data[i][2]);
+        if (data[i][2] > TIME_FLOOR)
+        {
+            binX = h1->GetXaxis()->FindBin(data[i][channel]);
+            binY = h1->GetXaxis()->FindBin(data[i][2]);
+            h1->Fill(data[i][channel], data[i][2]);
+        }
     }
     h1->SetMinimum(zMin);
     h1->SetMaximum(zMax);
     h1->SetOption("colz");
     h1->SetOption("logz");
     char title[64];
-    snprintf(title, 64, "Time-Energy ADC%d TQ corrected; energy[keV]; time[ns];", channel);
+    snprintf(title, 64, "Time-Energy ADC%d TQ corrected (t>%d); energy[keV]; time[ns];", channel + 1, TIME_FLOOR);
     h1->SetTitle(title);
     canvases[0] = new TCanvas("c1", "c1", 600, 600);
     h1->Draw("colz");

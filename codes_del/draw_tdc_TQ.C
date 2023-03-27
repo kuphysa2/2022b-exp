@@ -6,7 +6,7 @@
 #include <TROOT.h>
 #include <TStyle.h>
 #define NAME_LEN 64
-#define TIME_FLOOR 20
+#define TIME_FLOOR 50
 
 void draw_tdc_TQ()
 {

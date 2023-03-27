@@ -6,13 +6,12 @@
 #include <TROOT.h>
 #include <TStyle.h>
 #define NAME_LEN 64
-#define TIME_FLOOR 20
+#define TIME_FLOOR 200
 
 void draw_tdcadc()
 {
     int exp_date = 0;
     int ana_date = 320;
-    int hist_minADC = 20;
     int tdc_nBins = 1000;
     int adc_nBins = 1000;
     int tdc_range[] = {0, 1000};
@@ -61,7 +60,7 @@ void draw_tdcadc()
     htdc->Draw();
     canvases[0]->Update();
     char tdc_ofs_name[NAME_LEN];
-    snprintf(tdc_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/tdc.pdf", exp_date, ana_date);
+    snprintf(tdc_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/tdc_Tover%d.pdf", exp_date, ana_date, TIME_FLOOR);
     canvases[0]->Print(tdc_ofs_name);
 
     // drawing ADC1 histogram
@@ -69,7 +68,7 @@ void draw_tdcadc()
     hadc0->Draw();
     canvases[1]->Update();
     char adc1_ofs_name[NAME_LEN];
-    snprintf(adc1_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/adc1.pdf", exp_date, ana_date);
+    snprintf(adc1_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/adc1_Tover%d.pdf", exp_date, ana_date, TIME_FLOOR);
     canvases[1]->Print(adc1_ofs_name);
 
     // drawing ADC2 histogram
@@ -77,6 +76,6 @@ void draw_tdcadc()
     hadc1->Draw();
     canvases[2]->Update();
     char adc2_ofs_name[NAME_LEN];
-    snprintf(adc2_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/adc2.pdf", exp_date, ana_date);
+    snprintf(adc2_ofs_name, NAME_LEN, "../exp%04d/a%04d/pdf/t_cut/adc2_Tover%d.pdf", exp_date, ana_date, TIME_FLOOR);
     canvases[2]->Print(adc2_ofs_name);
 }

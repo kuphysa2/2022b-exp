@@ -19,7 +19,7 @@ void pickoff()
 {
     int adc_channel = 1; // 1 or 2
     int exp_date = 320;
-    int ana_date = 323;
+    int ana_date = 327;
 
     adc_channel--;
     int row;
@@ -131,11 +131,17 @@ void pickoff()
     canvases[2] = new TCanvas("canvas2", "f-t; t; f(t);");
     canvases[2]->Divide(1, 1);
     gStyle->SetOptFit();
+    Double_t t_non0[MAX_SEC], ft_non0[MAX_SEC];
+    for (i = 0; i < MAX_SEC; i++)
+    {
+        t_non0[i] = t[i + 1];
+        ft_non0[i] = ft[i + 1];
+    }
     TF1 fFit("fFit", "[0] * exp(-x / [1]) + [2]");
     fFit.SetParameters(1, 511, 0);
     fFit.SetParLimits(0, 0, 100000);
     fFit.SetParLimits(2, 0, 100000);
-    TGraph *graph_f = new TGraph(MAX_SEC + 1, t, ft);
+    TGraph *graph_f = new TGraph(MAX_SEC, t_non0, ft_non0);
     graph_f->SetMarkerStyle(8);
     graph_f->Fit("fFit");
     graph_f->SetTitle(Form("Pick-off f(t) Ch%d; t [ns]; f(t)", adc_channel + 1));
