@@ -11,8 +11,8 @@
 
 void adc_calib_draw()
 {
-    int exp_date = 320;
-    int ana_date = 327;
+    int exp_date = 0;
+    int ana_date = 320;
     int nBins[EN_SEC] = {50, 100, 100};
     int E_val[EN_SEC] = {0, 511, 1275};
     // channel, energy, up/down
@@ -86,7 +86,7 @@ void adc_calib_draw()
 
         }
 
-        canvases[channel][EN_SEC] = new TCanvas("", "", 500, 500);
+        canvases[channel][EN_SEC] = new TCanvas("", "", 600, 500);
         gStyle->SetOptStat(1111);
         graph[channel] = new TGraph(EN_SEC, means[channel], E_val);
         graph[channel]->SetMarkerStyle(8);

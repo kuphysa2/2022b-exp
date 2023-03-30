@@ -7,10 +7,10 @@
 #include <TStyle.h>
 #define NAME_LEN 64
 
-void adc_calib_draw()
+void adc_calib_draw2peak()
 {
-    int exp_date = 320;
-    int ana_date = 323;
+    int exp_date = 0;
+    int ana_date = 320;
     int nBins[] = {50, 100};
     int E_val[] = {0, 1275};
     // channel, energy, up/down
@@ -41,7 +41,7 @@ void adc_calib_draw()
 
     // input
     char ifs_name[NAME_LEN];
-    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
     ifstream data(ifs_name);
     int flag = 0;
     while (!data.eof())
@@ -98,7 +98,7 @@ void adc_calib_draw()
 
 
     // graph draw
-    canvases[2][0] = new TCanvas("", "", 500, 500);
+    canvases[2][0] = new TCanvas("", "", 650, 500);
     gStyle->SetOptStat(1111);
     gStyle->SetStatX(0.5);
     gStyle->SetStatY(0.8);
@@ -109,7 +109,7 @@ void adc_calib_draw()
     graph1->Draw("AP");
     canvases[2][0]->Update();
     canvases[2][0]->Print(Form("../exp%04d/a%04d/pdf/ADC1_calib.pdf", exp_date, ana_date));
-    canvases[2][1] = new TCanvas("", "", 500, 500);
+    canvases[2][1] = new TCanvas("", "", 650, 500);
     gStyle->SetOptFit();
     TGraph *graph2 = new TGraph(2, means[1], E_val);
     graph2->SetMarkerStyle(8);
