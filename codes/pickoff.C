@@ -18,8 +18,8 @@ using namespace std;
 void pickoff()
 {
     int adc_channel = 1; // 1 or 2
-    int exp_date = 320;
-    int ana_date = 327;
+    int exp_date = 0;
+    int ana_date = 320;
 
     adc_channel--;
     int row;
@@ -28,7 +28,7 @@ void pickoff()
     Double_t yt[MAX_SEC + 1] = {}, St[MAX_SEC + 1] = {};
     Double_t ft[MAX_SEC + 1];
     Double_t p[3];
-    int Erange4y[] = {450, 600};
+    int Erange4y[] = {500, 520};
     int Erange4S[] = {100, 450};
     int NBins4y = 20;
     int NBins4S = 50;

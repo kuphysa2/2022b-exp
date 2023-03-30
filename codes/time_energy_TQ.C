@@ -13,12 +13,12 @@ const int MAX_COLS = 3;
 
 void time_energy_TQ()
 {
-    int channel = 1; // 1 or 2
+    int channel = 2; // 1 or 2
     int exp_date = 320;
-    int ana_date = 327;
+    int ana_date = 330;
     channel--;
     int nBins = 150;
-    double zMax = 100;
+    double zMax = 5000;
     double zMin = 1;
     double xMax = 2000;
     double xMin = 100;

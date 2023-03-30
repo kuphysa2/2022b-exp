@@ -16,7 +16,7 @@ void draw_tdcadc()
     int adc_nBins = 1000;
     int tdc_range[] = {0, 1000};
     int adc_range[] = {20, 2800};
-    int tFit_range[] = {72, 654};
+    int tFit_range[] = {150+72, 150+654};
 
     // Fitの統計情報を記載
     gStyle->SetOptFit(1111);

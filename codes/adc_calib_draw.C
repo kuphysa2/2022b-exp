@@ -17,7 +17,7 @@ void adc_calib_draw()
     int E_val[EN_SEC] = {0, 511, 1275};
     // channel, energy, up/down
     int range[CH_SEC][EN_SEC][2] = {{{-100, 200}, {750, 950}, {1800, 2200}}, {{-100, 200}, {600, 900}, {1750, 2300}}};
-    int fit_range[CH_SEC][EN_SEC][2] = {{{-100, 200}, {750, 950}, {1800, 2200}}, {{-100, 200}, {600, 900}, {1750, 2300}}};
+    int fit_range[CH_SEC][EN_SEC][2] = {{{-100, 200}, {750, 950}, {1800, 2200}}, {{-100, 200}, {650, 900}, {1750, 2300}}};
     int tdc, adc[CH_SEC];
     int energy, channel;
     // channel, energy
@@ -40,7 +40,7 @@ void adc_calib_draw()
 
     // input
     char ifs_name[NAME_LEN];
-    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
+    snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);
     ifstream data(ifs_name);
     int flag = 0;
     while (!data.eof())

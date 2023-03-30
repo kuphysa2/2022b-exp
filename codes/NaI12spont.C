@@ -15,7 +15,7 @@ const int MAX_COLS = 3;
 void NaI12spont()
 {
     int exp_date = 320;
-    int ana_date = 327;
+    int ana_date = 330;
     double zMax = 20;
     double zMin = 1;
     double xMax = 1500;
