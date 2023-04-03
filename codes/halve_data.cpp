@@ -5,8 +5,8 @@
 
 int main()
 {
-    int exp_date = 0;
-    int ana_date = 320;
+    int exp_date = 320;
+    int ana_date = 403;
     char ifs_name[64], ofs_name[64];
     snprintf(ifs_name, 64, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date);
     snprintf(ofs_name, 64, "../exp%04d/a%04d/exp%04d_halved.dat", exp_date, ana_date, exp_date);

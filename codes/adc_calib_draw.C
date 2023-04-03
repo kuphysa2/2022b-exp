@@ -11,8 +11,8 @@
 
 void adc_calib_draw()
 {
-    int exp_date = 0;
-    int ana_date = 320;
+    int exp_date = 320;
+    int ana_date = 403;
     int nBins[EN_SEC] = {50, 100, 100};
     int E_val[EN_SEC] = {0, 511, 1275};
     // channel, energy, up/down

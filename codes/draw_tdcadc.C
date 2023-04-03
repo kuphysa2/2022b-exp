@@ -10,7 +10,7 @@
 void draw_tdcadc()
 {
     int exp_date = 320;
-    int ana_date = 327;
+    int ana_date = 403;
     int hist_minADC = 20;
     int tdc_nBins = 1000;
     int adc_nBins = 1000;

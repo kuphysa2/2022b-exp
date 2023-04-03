@@ -9,7 +9,7 @@
 int tdc_calibrat(double factor = 0.246, double ground = -22.618)
 {
     int exp_date = 320;
-    int ana_date = 330;
+    int ana_date = 403;
 
     char ifs_name[NAME_LEN], ofs_name[NAME_LEN];
     snprintf(ifs_name, NAME_LEN, "../exp%04d/a%04d/exp%04d.dat", exp_date, ana_date, exp_date); // for exp0000
